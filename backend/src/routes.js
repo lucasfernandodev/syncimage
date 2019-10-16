@@ -1,18 +1,23 @@
 const express = require('express');
-const multer = require('multer');
+
 const UserController = require("./controllers/UserController");
 const ImageController = require("./controllers/ImageController");
-const multerConfig = require('./config/multer');
+const CategoryController = require("./controllers/CategoryController");
+
 const routes = express.Router();
 
+// users
 routes.get('/users', UserController.index);
 routes.get('/users/:id', UserController.show);
 routes.post('/users', UserController.store);
 routes.put('/users/:id', UserController.update);
 routes.delete('/users/:id', UserController.destroy);
 
+// Images
 routes.get('/image',ImageController.index);
+routes.post('/image', ImageController.store);
 
-routes.post('/image', multer(multerConfig).single('file'), ImageController.store);
-
+routes.get('/category', CategoryController.index);
+routes.post('/category', CategoryController.store);
+routes.put('/category/:id', CategoryController.update);
 module.exports = routes;
