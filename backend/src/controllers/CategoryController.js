@@ -11,6 +11,12 @@ module.exports = {
         return res.status(201).json(category);
     },
 
+    async show(req, res){
+        const category = await Category.findOne({user_id: req.params.id});
+
+        return res.json(category);
+    },
+
     async store(req, res){
 
         const  category = await Category.create(req.body)
@@ -19,7 +25,7 @@ module.exports = {
     },
 
     async update(req, res){
-        const category = await Category.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        const category = await Category.findOneAndUpdate(req.params.id, req.body, {new: true})
 
         return res.json(category)
     }

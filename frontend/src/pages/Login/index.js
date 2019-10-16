@@ -19,16 +19,16 @@ export default function Login({history}) {
     const [alertContext, setAlertContext] = useState([]);
     const [loginON, setLoginOn] = useState([])
 
-    function handlerLogin(e){
+    async function handlerLogin(e){
         e.preventDefault();
 
         
         const vUsername = ValidaForms(username, 'username', { min: 4, max: 12 })
         const vPassword = ValidaForms(password, 'password', { min: 4, max: 16 })
-        
+
         if (vUsername.length > 0) {
             setAlertContext({
-                title: "Falha ao cadastrar",
+                title: "Falha ao logar",
                 messege: vUsername[0].messege
             })
             setAlertDisplay(true);
@@ -36,24 +36,34 @@ export default function Login({history}) {
 
         if (vPassword.length > 0) {
             setAlertContext({
-                title: "Falha ao cadastrar",
+                title: "Falha ao logar",
                 messege: vPassword[0].messege
             })
             setAlertDisplay(true);
         }
 
-        if(alertContext.length == 0){
-            console.log('casa')
-            const store = async (id) => {
-                const response =  await axios.get(`http://localhost:3001/api/users/${id}`);
+        if(vUsername.length === 0 && vPassword.length === 0){
 
-                localStorage.setItem('_id',response.data._id);
+
+     
+                const response =  await axios.get(`http://localhost:3001/api/users/${username}`);
+
+                if(response.data === null){
+                    setAlertContext({
+                        title: "Falha ao fazer login",
+                        messege: "usuario digitado não exite."
+                    })
+                    setAlertDisplay(true);
+                }else{
+                    localStorage.setItem('user_id',response.data._id);
+                    history.push('/galeria')
+                }
+
             console.log(response);
-            }
 
-            store(username)
 
-            history.push('/upload')
+
+
         }
     }
 

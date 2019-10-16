@@ -1,19 +1,32 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 import Header from "../../componentes/header";
 import Footer from "../../componentes/footer";
 import Upload from '../../componentes/Upload';
-import AddCategory from "./addCategory"
+import AddCategory from "./addCategory";
 import "./style.css";
 
 import camera from "../../assets/camera.svg";
 
-
+const user_id = localStorage.getItem('user_id');
 
 export default function Galeria() {
     
     const [uploadDisplay, setUploadDisplay] = useState(false);
     const [categoryDisplay, setCategoryDisplay] = useState(false);
 
+    const [listCategory, setListCategory] = useState([])
+
+    const renderList = async () => {
+        const response =  await axios.get(`http://localhost:3001/api/category/${user_id}`);
+
+        setListCategory(response.data.category)
+    }
+
+    renderList();
+
+
+    // console.log(response.data.category)
     return(
         <>
             <Header />
@@ -30,6 +43,9 @@ export default function Galeria() {
                     <div className="header-category">
                         <select className="btn-category">
                             <option value="">Categorias</option>
+                            {listCategory.map((item, i) => (
+                                <option key={i}>{item}</option>
+                            ))}
                         </select>
                     </div>
 

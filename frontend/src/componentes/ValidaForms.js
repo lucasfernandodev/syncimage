@@ -16,7 +16,7 @@ export default function ValidaForms(campo,campoName, option = {}){
     }else{
 
 
-        if(!campo || campo === null || typeof(campo) === 'undefined'){
+        if(!campo || campo === null || typeof(campo) === 'undefined' === 'undefined' || campo === ''){
             erro.push({
                 messege: `O campo ${campoName} não pode ficar em branco.`
             }) 
