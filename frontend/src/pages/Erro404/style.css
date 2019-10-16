@@ -1,0 +1,52 @@
+.container-erro{
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #ff7979;
+}
+
+.container-erro img{
+    width: 450px;
+    height: auto;
+}
+
+.container-erro span{
+    font-family: roboto, sans-serif;
+    font-size: 18px;
+    color: #fff;
+    width: 100%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.container-erro span p{
+    font-weight: bold;
+    font-size: 22px;
+    margin-right: 8px;
+}
+
+.container-erro .btn{
+    width: 310px;
+    height: 48px;
+    border-radius: 4px;
+    color: #ddd;
+    border: none;
+    cursor: pointer;
+    background: #e74c3c;
+    box-shadow: 2px 2px 3px -2px #c0392b;
+    transition: 0.5s linear;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: roboto, Arial, Helvetica, sans-serif;
+}
+
+.container-erro .btn:hover{
+    background: #c0392b;
+}

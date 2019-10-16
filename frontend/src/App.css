@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+*,*::after,*::before{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body{
+  width: 100%;
+  min-height: 100vh;
+  background: #1F1C2C;
+  position: relative;
+}
+
+.btn-danger{
+  background: #ee5253;
+  border: 1px solid ;
+  color: #fff;
+}
+.btn-primary{
+  background: #2e86de;
+  border: 1px solid ;
+  color: #fff;
+}
+.btn-warning{
+  background: #ff9f43;
+  border: 1px solid ;
+  color: #fff;
+}
+.btn-dark{
+  background: #222f3e;
+  border: 1px solid ;
+  color: #fff;
+}
+
+.btn-danger:hover{
+  background: #ff6b6b;
+  border: 1px solid ;
+  color: #fff;
+}
+.btn-primary:hover{
+  background: #54a0ff;
+  border: 1px solid ;
+  color: #fff;
+}
+.btn-warning:hover{
+  background: #feca57;
+  border: 1px solid ;
+  color: #fff;
+}
+.btn-dark:hover{
+  background: #576574;
+  border: 1px solid ;
+  color: #fff;
+}

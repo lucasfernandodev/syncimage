@@ -1,0 +1,49 @@
+.async-header{
+    height: 80px;
+    background: #fff;
+    width:80%;
+    margin: 30px auto;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+}
+
+.async-header .user-content{
+    position: absolute;
+    right: 15px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.async-header .user-content span{
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 7px;
+
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.async-header .user-content span span{
+    font-size: 14px;
+    font-weight: normal;
+    color: #888;
+    display: block;
+    width: 100%;
+}
+
+
+.async-header .user-image{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #ddd;
+
+    border: 2px solid #2e86de;
+}

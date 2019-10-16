@@ -1,0 +1,11 @@
+.async-footer{
+    height: 80px;
+    background: #fff;
+    width:80%;
+    margin: 30px auto;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+}

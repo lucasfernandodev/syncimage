@@ -1,0 +1,95 @@
+.galery-addCategory{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    padding: 15px;
+    /* box-shadow: 3px 3px 1px -2px rgba(0, 0, 0, 0.015),3px 3px 0 -2px rgba(0, 0, 0, 0.1),-2px -2px 2px -2px rgba(0, 0, 0, 0.1); */
+    font-family: roboto, Arial, Helvetica, sans-serif;
+}
+
+.galery-addCategory .addCategory-content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 440px;
+    background: #fff;
+    padding: 15px;
+}
+
+.galery-addCategory h1, .galery-addCategory input, .galery-addCategory button{
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+.galery-addCategory .addCategory-header{
+    width: 100%;
+    padding: 7px;
+    text-align: center;
+    border-bottom: 1px solid #efefef;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.galery-addCategory .addCategory-header .addCategory-close{
+    width: 25px;
+    height: 25px;
+    font-family: monospace;
+     position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ddd;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.galery-addCategory h1{
+    width: 100%;
+    font-size: 24px;
+    color: #2f2f2f;
+}
+
+.galery-addCategory .addCategory-body .from-group{
+    position: relative;
+}
+
+.galery-addCategory .addCategory-body .addCategory-input{
+    width: 100%;
+    height: 44px;
+    border: 1px solid #aaa;
+    padding-left: 12px;
+    padding-right: 45px;
+    margin: 7px 0;
+    outline: none;
+}
+
+.galery-addCategory .addCategory-body > span{
+    display: block;
+    text-align: center;
+    padding: 7px 0;
+}
+
+.galery-addCategory .addCategory-body button{
+    height: 44px;
+    width: 44px;
+    background: #fff;
+    color: #222;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    border: 1px solid #aaa;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 7px 0;
+}

@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css?family=Aclonica&display=swap');
+
+.container-main{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-main form{
+    height: auto;
+    max-height: 600px;
+    background: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    box-shadow: 1px 1px 22px rgba(0, 0, 0, 0.12);
+}
+
+.container-main form .container-woman{
+    background: #fff;
+    width: 650px;
+    height: 600px;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.container-main form .container-woman img{
+    width: auto;
+    height: 100%;
+}
+
+.container-main form .content{
+    width: 400px;
+    background: #fff;
+    padding: 30px;
+}
+
+.container-main form .content .title{
+    width: 100%;
+    font-size: 32px;
+    margin-bottom: 30px;
+
+    text-align: left;
+    font-family: 'Aclonica', sans-serif;
+    color: #2c3e50;
+    display: block;
+ 
+}
+
+.container-main form .content .title span{
+    display: block;
+    width: 100%;
+
+}
+
+.container-main form .content .description{
+    color: #2c3e50;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    line-height: 26px;
+    margin-bottom: 30px;
+
+    display: block;
+}
+
+.container-main form .form-group{
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+  
+}
+
+.container-main form .form-group label{
+    width: 100%;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "roboto", Arial, Helvetica, sans-serif;
+    color: #2c3e50;
+    opacity: 0.7;
+}
+
+.container-main form .form-group label span{
+    font-size: 12px;
+    color: #2c3e50;
+    font-weight: normal;
+    margin-left: 3px;
+}
+
+.container-main form .form-group input{
+    width: 100%;
+    height: 45px;
+    outline: none;
+    transition: 0.5s linear;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    padding-lefT: 5px;
+    color: #333;
+    font-size: 14px;
+    font-family: roboto, Arial, Helvetica, sans-serif;
+}
+
+.container-main form .form-group input::placeholder{
+    color: rgba(83, 82, 237, 0.5);
+}
+
+.container-main form .form-group input:focus, .container-main form .form-group input:hover{
+    box-shadow: 0px 1px 2px -8px rgba(83, 82, 237, 0.2), 0px 2px 2px -2px rgba(83, 82, 237, 0.8);
+}
+
+.form-row{
+    width: 100%;
+    margin: 30px 0;
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    position: relative;
+}
+
+.form-row input{
+    display: none;
+
+}
+
+.form-row label{
+    padding-left: 25px;
+    color: #2c3e50;
+    font-size: 14px;
+    font-weight: bold;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    -webkit-touch-callout: none;  /* iPhone OS, Safari */
+    -webkit-user-select: none;    /* Chrome, Safari 3 */
+    -khtml-user-select: none;     /* Safari 2 */
+    -moz-user-select: none;       /* Firefox */
+    -ms-user-select: none;        /* IE10+ */
+    user-select: none;            /* Possível implementação no futuro */
+    cursor: pointer;
+}
+
+.form-row label::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #2c3e50;
+    text-align: center;
+    line-height: 15px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.form-row input:checked + label::before{
+    background: #2c3e50;
+}
+
+
+.container-main form .btn-login{
+    width: 100%;
+    margin: 7px auto;
+    height: 48px;
+    cursor: pointer;
+    background: #3742fa;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    text-transform: capitalize;
+    outline: none;
+    transition: 0.8s;
+}
+
+
+.container-main form .content .no-count{
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+    color: #3742fa;
+}
+
+.container-main form .content .no-count a{
+    margin-left: 7px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.msg-erro{
+    color: #e74c3c;
+    width: 100%;
+    font-size: 14px;
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    height: 30px;
+    line-height: 30px;
+    display: none;
+}
+
+.loading{
+    width: 72px;
+    height: 72px;
+    margin: 0 auto;
+    display: none;
+}

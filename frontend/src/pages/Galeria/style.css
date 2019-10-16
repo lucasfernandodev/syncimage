@@ -1,0 +1,110 @@
+.container-galeria{
+    width: 80%;
+    background: #fff;
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    min-height: 1px;
+    margin: 0 auto;
+    padding: 0 15px;
+    display: block;
+}
+
+.container-galeria .header-galeria{
+    display: block;
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+    position: relative;
+    border-bottom: 1px solid #ddd;
+    padding-left: 25px;
+    margin-bottom: 30px;
+}
+
+.container-galeria .header-galeria .header-title .title{
+    font-size: 26px;
+    font-weight: bold;
+}
+.container-galeria .header-galeria .header-upload{
+    position: absolute;
+    right: 255px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.container-galeria .header-galeria .header-category{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+.container-galeria .header-galeria .header-add-category{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+}
+
+.container-galeria .header-galeria .header-add-category .btn-add-category{
+    width: 44px;
+    height: 44px;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+    box-shadow: 1px 2px 2px -1px rgba(0, 0, 0, 0.12);
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    outline: none;
+    opacity: 0.5;
+    transition: .5s linear;
+}
+
+.container-galeria .header-galeria .header-category .btn-category{
+    width: 220px;
+    height: 44px;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+    box-shadow: 1px 2px 2px -1px rgba(0, 0, 0, 0.12);
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    outline: none;
+    opacity: 0.5;
+    transition: .5s linear;
+}
+
+.container-galeria .header-galeria .header-upload .btn-upload{
+    width: 220px;
+    height: 44px;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+    box-shadow: 1px 2px 2px -1px rgba(0, 0, 0, 0.12);
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    outline: none;
+    opacity: 0.5;
+    transition: .5s linear;
+}
+
+.container-galeria .header-galeria .header-upload .btn-upload img{
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    left: 15px;
+    height: 20px;
+    width: auto;
+}
+
+.container-galeria .header-galeria .header-upload .btn-upload:hover{
+    opacity: 1;
+    box-shadow: 1px 2px 2px -1px rgba(0, 0, 0, 0.2), -3px -3px 2px -2px rgba(0, 0, 0, 0.040);
+}
+

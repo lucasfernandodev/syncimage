@@ -1,0 +1,42 @@
+{
+  "name": "syncimage",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.19.0",
+    "base64-img": "^1.0.4",
+    "compress.js": "^1.1.2",
+    "express": "^4.17.1",
+    "image-to-base64": "^2.0.1",
+    "mongoose": "^5.7.4",
+    "qs": "^6.9.0",
+    "query-string": "^6.8.3",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-navigation": "^4.0.10",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.2.0",
+    "react-select": "^3.0.8"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
