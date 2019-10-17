@@ -16,7 +16,17 @@ module.exports = {
     },
 
     async store(req, res){
-        const user = await User.create(req.body)
+        const { email } = req.body;
+
+        if(await User.findOne({email})){
+
+            return res.status(400).send({message: "usuario já existe"});
+
+        }
+
+        const user = await User.create(req.body);
+
+        user.password == undefined;
 
         return res.json(user)
     },

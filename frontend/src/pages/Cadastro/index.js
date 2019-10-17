@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import axios from "axios";
 import Alert from "../../componentes/Alert";
 import ValidaForms from "../../componentes/ValidaForms";
+
+
 import "./style.css";
-import loading from "../../assets/loading.svg";
+import loadingSvg from "../../assets/loading.svg";
 import woman from "../../assets/woman2.jpg";
 
 
@@ -17,9 +19,11 @@ export default function Cadastro({ history }) {
     // alert
     const [alertDisplay, setAlertDisplay] = useState(false);
     const [alertContext, setAlertContext] = useState([]);
-
+    const [alertType, setAlertType] = useState('')
+    const [loading, setLoading] = useState('Cadastrar')
 
     async function handleCadastrar(e) {
+        setLoading('loading');
         e.preventDefault();
 
         const vUsername = ValidaForms(username, 'username', { min: 4, max: 12 })
@@ -27,52 +31,70 @@ export default function Cadastro({ history }) {
         const vEmail = ValidaForms(email, 'email', { min: 4, max: 32 })
         const vTermos = ValidaForms(termos, 'termos & condições', { type: Boolean })
 
-
         if (vUsername.length > 0) {
             setAlertContext({
                 title: "Falha ao cadastrar",
                 messege: vUsername[0].messege
             })
             setAlertDisplay(true);
-        }
+            setLoading('Cadastrar');
+        } else {
+            if (vPassword.length > 0) {
+                setAlertContext({
+                    title: "Falha ao cadastrar",
+                    messege: vPassword[0].messege
+                })
+                setAlertDisplay(true);
+                setLoading('Cadastrar');
+            } else {
+                if (vEmail.length > 0) {
+                    setAlertContext({
+                        title: "Falha ao cadastrar",
+                        messege: vEmail[0].messege
+                    })
+                    setAlertDisplay(true);
+                    setLoading('Cadastrar');
+                } else {
+                    if (vTermos.length > 0) {
+                        setAlertContext({
+                            title: "Falha ao cadastrar",
+                            messege: vTermos[0].messege
+                        })
+                        setAlertDisplay(true);
+                        setLoading('Cadastrar');
+                    } else {
 
-        if (vPassword.length > 0) {
-            setAlertContext({
-                title: "Falha ao cadastrar",
-                messege: vPassword[0].messege
-            })
-            setAlertDisplay(true);
-        }
+                        try {
+                            const response = await axios.post('http://localhost:3001/api/users', {
+                                name: username,
+                                email: email,
+                                password: password
+                            });
+                            localStorage.setItem("user_id", response.data._id);
 
-        if (vEmail.length > 0) {
-            setAlertContext({
-                title: "Falha ao cadastrar",
-                messege: vEmail[0].messege
-            })
-            setAlertDisplay(true);
-        }
+                            setAlertContext({
+                                title: "Sucesso ao cadastrar",
+                                messege: "Bem vindo a SyncImage"
+                            })
 
-        if (vTermos.length > 0) {
-            setAlertContext({
-                title: "Falha ao cadastrar",
-                messege: vTermos[0].messege
-            })
-            setAlertDisplay(true);
-        }
+                            setAlertType('save');
+                            setAlertDisplay(true);
 
-        if(alertContext.length == 0){
-            console.log('casa')
-          
-                const response =  await axios.post('http://localhost:3001/api/users', {
-                    name: username,
-                    email: email,
-                    password: password
-                });
+                            history.push('/galery');
 
-             console.log(response);
-         
+                        } catch (error) {
+                            setAlertContext({
+                                title: "Falha ao cadastrar",
+                                messege: "O e-mail digitado já existe"
+                            })
+                            setAlertDisplay(true);
+                            setLoading('Cadastrar');
+                        }
 
-            localStorage.setItem("user_id", response.data._id);
+                    }
+
+                }
+            }
         }
 
     }
@@ -130,15 +152,17 @@ export default function Cadastro({ history }) {
                         <label htmlFor="lebrar-me">Aceitar Termos e condições</label>
                     </div>
 
-                    <button className="btn-login">Cadastrar</button>
-                    <img src={loading} alt="" className="loading" />
-                    <Alert
-                        title={alertContext.title}
-                        messege={alertContext.messege}
-                        display={alertDisplay}
-                        onClose={(e) => { setAlertDisplay(false) }} />
+                    <button className="btn-login">{loading === 'loading' ? (<img src={loadingSvg} className="loading"/>) : loading}</button>
+                   
                 </div>
             </form>
+            <Alert
+                type={alertType}
+                title={alertContext.title}
+                messege={alertContext.messege}
+                display={alertDisplay}
+                onClose={(e) => { setAlertDisplay(false) }} 
+            />
         </div>
     )
 }

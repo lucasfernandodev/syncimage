@@ -110,11 +110,7 @@
 }
 
 .container-main form .form-group input::placeholder{
-    color: rgba(83, 82, 237, 0.5);
-}
-
-.container-main form .form-group input:focus, .container-main form .form-group input:hover{
-    box-shadow: 0px 1px 2px -8px rgba(83, 82, 237, 0.2), 0px 2px 2px -2px rgba(83, 82, 237, 0.8);
+    color: #888;
 }
 
 .form-row{
@@ -179,7 +175,7 @@
     margin: 7px auto;
     height: 48px;
     cursor: pointer;
-    background: #3742fa;
+    background: #feca57;
     color: #fff;
     border: none;
     font-size: 16px;
@@ -189,16 +185,16 @@
     transition: 0.8s;
 }
 
+.container-main form .btn-login:hover{
+    background: #ff9f43;
+}
 
 
 .loading{
-    width: 72px;
-    height: 72px;
+    width: 40px;
+    height: 40px;
     margin: 0 auto;
-    display: none;
+    background: none;
+    display: block;
 }
 
-
-.erro-input{
-    border: 1px solid red !important;
-}

@@ -10,7 +10,8 @@ app.use(cors());
 
 mongoose.connect('mongodb+srv://admin:admin@clusterdev-fp9by.mongodb.net/asyncimage?retryWrites=true&w=majority', {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
 })
 
 app.use('/api', routes)

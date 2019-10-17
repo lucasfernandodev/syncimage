@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&display=swap');
 .container-alert{
-    width: 100%;
+    width: 100vh;
     height: 100vh;
     position: absolute;
     top: 0;
@@ -52,4 +52,13 @@
     font-size: 14px;
     color: #555;
     font-family: 'Roboto Condensed', sans-serif;
+}
+
+.save{
+    position: fixed;
+    top: unset;
+    left: 50%;
+    right: 30px;
+    bottom: 15px;
+    border-left: 4px solid #10ac84 !important;
 }

@@ -5,8 +5,8 @@ function Alert(props) {
         
     if(props.display){
         return (
-            <>
-                <div className="document-alert" style={{display: props.display}}>
+
+                <div className={props.type === 'save' ? "document-alert save" : "document-alert"} style={{display: props.display}}>
                     <div className="alert-header">
                         <h3 className="alert-title">{props.title}</h3>
                         <div className="alert-btn-close" onClick={props.onClose}>X</div>
@@ -17,7 +17,7 @@ function Alert(props) {
                         </p>
                     </alert>
                 </div>
-            </>
+
         )
     }else{
         return <div />
