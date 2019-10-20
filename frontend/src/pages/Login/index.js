@@ -8,9 +8,9 @@ import loading from "../../assets/loading.svg";
 import woman from "../../assets/woman.jpg";
 
 
-export default function Login({history}) {
+export default function Login({ history }) {
 
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
 
@@ -19,17 +19,16 @@ export default function Login({history}) {
     const [alertContext, setAlertContext] = useState([]);
     const [loginON, setLoginOn] = useState([])
 
-    async function handlerLogin(e){
+    async function handlerLogin(e) {
         e.preventDefault();
 
-        
-        const vUsername = ValidaForms(username, 'username', { min: 4, max: 12 })
+        const vEmail = ValidaForms(email, 'e-mail', { min: 4, max: 12 })
         const vPassword = ValidaForms(password, 'password', { min: 4, max: 16 })
 
-        if (vUsername.length > 0) {
+        if (vEmail.length > 0) {
             setAlertContext({
                 title: "Falha ao logar",
-                messege: vUsername[0].messege
+                messege: vEmail[0].messege
             })
             setAlertDisplay(true);
         }
@@ -42,24 +41,37 @@ export default function Login({history}) {
             setAlertDisplay(true);
         }
 
-        if(vUsername.length === 0 && vPassword.length === 0){
+        if (vEmail.length === 0 && vPassword.length === 0) {
+   
+            
+            try {
+                const autheticate = await axios.post(`http://localhost:3001/api/authenticate`, {email, password});
+                localStorage.setItem('user_id', autheticate.data._id);
+                history.push('/galeria')
 
+                
+            } catch (err) {
 
-     
-                const response =  await axios.get(`http://localhost:3001/api/users/${username}`);
+                const erro = {error: err};
 
-                if(response.data === null){
+                if(erro.error.response){
+
+                    const message = erro.error.response.data.message
+
+                  
                     setAlertContext({
                         title: "Falha ao fazer login",
-                        messege: "usuario digitado não exite."
+                        messege: message
                     })
                     setAlertDisplay(true);
                 }else{
-                    localStorage.setItem('user_id',response.data._id);
-                    history.push('/galeria')
+                    // Falha no servidor
                 }
 
-            console.log(response);
+                
+            }
+
+
 
 
 
@@ -72,52 +84,52 @@ export default function Login({history}) {
         <div className="container-main">
             <form className="form-login" onSubmit={handlerLogin}>
                 <div className="container-woman">
-                    <img src={woman} alt=""/>
+                    <img src={woman} alt="" />
                 </div>
-               <div className="content">
-               <h1 className="title">
-                   Ola,
+                <div className="content">
+                    <h1 className="title">
+                        Ola,
                    <span>Bem vindo!</span>
-                </h1>
-                <span className="description">
-                    Faça upload das suas imagens, com qualidade e tenha acesso aonde estiver pelo computador ou celular.
+                    </h1>
+                    <span className="description">
+                        Faça upload das suas imagens, com qualidade e tenha acesso aonde estiver pelo computador ou celular.
                 </span>
-                <div className="form-group">
-                    <label htmlFor="username" className="f-label">Username <span>(Somente letras)</span></label>
-                    <input
-                        type="text"
-                        id="username"
-                        className="f-input"
-                        placeholder="Nome de usuario"
-                        onChange={event => setUsername(event.target.value)}
-                        maxLength="10"
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password" className="f-label">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        className="f-input"
-                        placeholder="Senha"
-                        onChange={event => setPassword(event.target.value)}
-                        maxLength="10"
-                    />
-                </div>
-                <div className="form-row">
-                    <input type="checkbox" id="lebrar-me" onChange={event => setLoginOn(event.target.checked)}/>
-                    <label htmlFor="lebrar-me">Lembrar-me</label>
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="email" className="f-label">Seu email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            className="f-input"
+                            placeholder="E-mail"
+                            onChange={event => setEmail(event.target.value)}
+                            maxLength="30"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password" className="f-label">Sua senha</label>
+                        <input
+                            type="password"
+                            id="password"
+                            className="f-input"
+                            placeholder="Digite uma senha segura"
+                            onChange={event => setPassword(event.target.value)}
+                            maxLength="10"
+                        />
+                    </div>
+                    <div className="form-row">
+                        <input type="checkbox" id="lebrar-me" onChange={event => setLoginOn(event.target.checked)} />
+                        <label htmlFor="lebrar-me">Manter conectado</label>
+                    </div>
 
-                <button className="btn-login">Login</button>
-                <img src={loading} alt="" className="loading"/>
-                <span className="no-count">Não tem uma conta? <a href="#">Crie uma agora</a></span>
-                <Alert
-                    title={alertContext.title}
-                    messege={alertContext.messege}
-                    display={alertDisplay}
-                    onClose={(e) => { setAlertDisplay(false) }} />
-               </div>
+                    <button className="btn-login">Login</button>
+                    <img src={loading} alt="" className="loading" />
+                    <span className="no-count">Não tem uma conta? <a href="#">Crie uma agora</a></span>
+                    <Alert
+                        title={alertContext.title}
+                        messege={alertContext.messege}
+                        display={alertDisplay}
+                        onClose={(e) => { setAlertDisplay(false) }} />
+                </div>
             </form>
         </div>
     )

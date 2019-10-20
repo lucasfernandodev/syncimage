@@ -11,11 +11,11 @@ function Alert(props) {
                         <h3 className="alert-title">{props.title}</h3>
                         <div className="alert-btn-close" onClick={props.onClose}>X</div>
                     </div>
-                    <alert className="alert-body">
+                    <div className="alert-body">
                         <p className="alert-description">
                             {props.messege}
                         </p>
-                    </alert>
+                    </div>
                 </div>
 
         )

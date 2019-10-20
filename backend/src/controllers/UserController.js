@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 require("../models/user");
+
 
 const User = mongoose.model("User");
 module.exports = {
@@ -7,6 +9,26 @@ module.exports = {
         const users = await User.find();
 
         return res.json(users);
+    },
+
+    async authenticate(req, res){
+
+        const {email, password} = req.body;
+
+        const user = await User.findOne({email}).select('+password');
+
+        if(!user){
+            return res.status(400).send({message: "Usuario não encontrado!"});
+        }
+
+        if(!await bcrypt.compare(password, user.password)){
+            return res.status(400).send({message: "Senha digitada está incorreta!"})
+        }
+
+        const { _id } = user;
+
+        return res.json({_id});
+
     },
 
     async show(req, res){
