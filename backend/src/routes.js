@@ -17,6 +17,7 @@ routes.post('/authenticate', UserController.authenticate);
 
 // Images
 routes.get('/image',ImageController.index);
+routes.get('/image/:id',ImageController.show);
 routes.post('/image', ImageController.store);
 
 routes.get('/category', CategoryController.index);

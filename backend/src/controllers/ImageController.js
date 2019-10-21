@@ -66,5 +66,12 @@ module.exports = {
 
         return res.json(img);
     },
+
+    async show(req, res){
+        const image = await Image.find({user_id: req.params.id});
+
+        return res.json(image);
+    },
+
  
 }

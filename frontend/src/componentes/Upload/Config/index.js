@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import axios from 'axios';
 
 import Validaforms from "../../../componentes/ValidaForms";
@@ -30,13 +30,7 @@ export default function Config(props) {
     const [alertContext, setAlertContext] = useState([]);
     const [alertType, setAlertType] = useState('primary');
 
-    const image = props.data;
-
-
-
-    const renderList = async () => {
-
-
+    useMemo(async () => {
         try {
             const response = await axios.get(`http://localhost:3001/api/category/${user_id}`);
 
@@ -50,124 +44,134 @@ export default function Config(props) {
             // Tratar erro
             console.log({ error })
         }
+    }, [])
+
+    const image = props.data;
 
 
-    }
+        async function handleUpload(e) {
+            e.preventDefault();
 
-    renderList();
+            const vTitle = Validaforms(title, 'titulo', { min: 4, max: 16 })
+            const vCategoria = Validaforms(categoria, 'categoria')
+            const vPrivacy = Validaforms(privacy, 'privacidade')
+            const vDescription = Validaforms(description, 'Descrição', { min: 5, max: 300 })
+            const vEditionOn = Validaforms(editionON, 'Edição automatica')
 
-
-    async function handleUpload(e) {
-        e.preventDefault();
-
-        const vTitle = Validaforms(title, 'titulo', { min: 4, max: 16 })
-        const vCategoria = Validaforms(categoria, 'categoria')
-        const vPrivacy = Validaforms(privacy, 'privacidade')
-        const vDescription = Validaforms(description, 'Descrição', { min: 5, max: 300 })
-        const vEditionOn = Validaforms(editionON, 'Edição automatica')
-
-        if (vTitle.length !== 0) {
-            setAlertContext({
-                title: "Falha ao salvar arquivo",
-                messege: vTitle[0].messege
-            })
-            setAlertType('fail')
-            setValidaTitle(true)
-            setAlertDisplay(true)
-        }
-
-        if (vCategoria.length !== 0) {
-            setAlertContext({
-                title: "Falha ao salvar arquivo",
-                messege: vCategoria[0].messege
-            })
-                        setAlertType('fail')
-            setAlertDisplay(true)
-
-        }
-
-        if (vPrivacy.length !== 0) {
-            setAlertContext({
-                title: "Falha ao salvar arquivo",
-                messege: vPrivacy[0].messege
-            })
-                        setAlertType('fail')
-            setAlertDisplay(true)
-
-        }
-
-        if (vDescription.length !== 0) {
-            setAlertContext({
-                title: "Falha ao salvar arquivo",
-                messege: vDescription[0].messege
-            })
-                        setAlertType('fail')
-            setAlertDisplay(true)
-            setValidaDescription(true)
-
-        }
-
-        if (vEditionOn.length !== 0) {
-            setAlertContext({
-                title: "Falha ao salvar arquivo",
-                messege: vEditionOn[0].messege
-            })
-            setAlertType('fail')
-            setAlertDisplay(true)
-
-        }
-
-        if (!image) {
-            setAlertContext({
-                title: "Falha ao fazer upload",
-                messege: "Imagem invalida"
-            })
-            setAlertType('fail')
-            setAlertDisplay(true)
-
-        }
-
-
-        if (image) {
-            if (image.size >= 3000000) {
+            if (vTitle.length !== 0) {
                 setAlertContext({
-                    title: "Falha ao fazer upload",
-                    messege: "O Tamanho da imagem não deve exceder 5mb"
+                    title: "Falha ao salvar arquivo",
+                    messege: vTitle[0].messege
+                })
+                setAlertType('fail')
+                setValidaTitle(true)
+                setAlertDisplay(true)
+            }
+
+            if (vCategoria.length !== 0) {
+                setAlertContext({
+                    title: "Falha ao salvar arquivo",
+                    messege: vCategoria[0].messege
                 })
                 setAlertType('fail')
                 setAlertDisplay(true)
 
             }
 
-            if (alertContext.length === 0) {
-                setValidaTitle(false)
-                setValidaDescription(false)
-                
-            }
-
-            const info = {
-                user_id,
-                title,
-                description,
-                category: categoria,
-                privacy,
+            if (vPrivacy.length !== 0) {
+                setAlertContext({
+                    title: "Falha ao salvar arquivo",
+                    messege: vPrivacy[0].messege
+                })
+                setAlertType('fail')
+                setAlertDisplay(true)
 
             }
 
-            const result = await CompressImage(image, 1);
+            if (vDescription.length !== 0) {
+                setAlertContext({
+                    title: "Falha ao salvar arquivo",
+                    messege: vDescription[0].messege
+                })
+                setAlertType('fail')
+                setAlertDisplay(true)
+                setValidaDescription(true)
 
-            const baseString = result.data;
-
-            try {
-                const response = await axios.post('http://localhost:3001/api/image', { image: baseString, info })
-                console.log(response);
-                
-            } catch (error) {
-                console.log(`${error}`)
             }
+
+            if (vEditionOn.length !== 0) {
+                setAlertContext({
+                    title: "Falha ao salvar arquivo",
+                    messege: vEditionOn[0].messege
+                })
+                setAlertType('fail')
+                setAlertDisplay(true)
+
+            }
+
+            if (!image) {
+                setAlertContext({
+                    title: "Falha ao fazer upload",
+                    messege: "Imagem invalida"
+                })
+                setAlertType('fail')
+                setAlertDisplay(true)
+
+            }
+
+
+            if (image) {
+                if (image.size >= 3000000) {
+                    setAlertContext({
+                        title: "Falha ao fazer upload",
+                        messege: "O Tamanho da imagem não deve exceder 5mb"
+                    })
+                    setAlertType('fail')
+                    setAlertDisplay(true)
+
+                }
+
+                if (alertContext.length === 0) {
+                    setValidaTitle(false)
+                    setValidaDescription(false)
+
+                }
+
+                const info = {
+                    user_id,
+                    title,
+                    description,
+                    category: categoria,
+                    privacy,
+
+                }
+
+                const result = await CompressImage(image, 1);
+
+                const baseString = result.data;
+
+                try {
+                    const response = await axios.post('http://localhost:3001/api/image', { image: baseString, info })
+                    setAlertContext({
+                        title: "Sucesso ao fazer upload",
+                        messege: "A imagem foi adicionada a sua galeria!"
+                    })
+                    setAlertType('sucess')
+                    setAlertDisplay(true)
+                    console.log(response);
+
+                } catch (error) {
+                    setAlertContext({
+                        title: "Falha ao fazer upload",
+                        messege: "Tente novamente!"
+                    })
+                    setAlertType('fail')
+                    setAlertDisplay(true)
+                    console.log(`${error}`)
+                }
+            }
+
         }
-
-    }
 
     function handleCancelar(e) {
         e.preventDefault();
@@ -175,7 +179,7 @@ export default function Config(props) {
 
     // --------------------------------------------------------------------------------------
 
-
+    console.log(props.name)
 
     if (props.name === 'option' || !props.name) {
 
