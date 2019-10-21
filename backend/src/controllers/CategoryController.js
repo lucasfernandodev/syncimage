@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const axios = require('axios');
 require("../models/Category");
 
 const Category = mongoose.model("Category");
@@ -12,9 +11,21 @@ module.exports = {
     },
 
     async show(req, res){
-        const category = await Category.findOne({user_id: req.params.id});
 
-        return res.json(category);
+        try{
+            const category = await Category.findOne({user_id: req.params.id});
+            if(!category){
+                return res.status(200).json({category: null});
+            }
+
+            return res.json(category);
+        }
+        catch(error){
+            return res.status(400).send({message: "Erro na requisição"});
+        }
+        
+
+
     },
 
     async store(req, res){

@@ -20,7 +20,7 @@
     right: 30px;
     top: 15px;
     box-shadow: 2px 2px 3px -1px rgba(0, 0, 0, 0.4);
-    border-left: 4px solid #ee5253;
+    border-left: 4px solid transparent;
     padding: 15px;
     
 }
@@ -54,11 +54,15 @@
     font-family: 'Roboto Condensed', sans-serif;
 }
 
-.save{
-    position: fixed;
-    top: unset;
-    left: 50%;
-    right: 30px;
-    bottom: 15px;
-    border-left: 4px solid #10ac84 !important;
+.primary{
+    border-left: 4px solid #3498db !important;
+}
+.sucess{
+    border-left: 4px solid #27ae60 !important;
+}
+.fail{
+    border-left: 4px solid #e74c3c !important;
+}
+.warning{
+    border-left: 4px solid #e67e22 !important;
 }

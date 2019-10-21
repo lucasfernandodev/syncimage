@@ -80,15 +80,24 @@ export default function Cadastro({ history }) {
                             setAlertType('save');
                             setAlertDisplay(true);
 
-                            history.push('/galery');
+                            history.push('/galeria');
 
-                        } catch (error) {
-                            setAlertContext({
-                                title: "Falha ao cadastrar",
-                                messege: "O e-mail digitado já existe"
-                            })
-                            setAlertDisplay(true);
-                            setLoading('Cadastrar');
+                        } catch (err) {
+                            const erro = {error: err};
+
+                            if(erro.error.response){
+                                const message = erro.error.response.data.message
+
+                                console.log(erro.error.response)
+                                setAlertContext({
+                                    title: "Falha ao cadastrar",
+                                    messege: message
+                                })
+                                setAlertDisplay(true);
+                                setLoading('Cadastrar');
+                            }
+
+                            
                         }
 
                     }

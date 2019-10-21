@@ -18,15 +18,27 @@ export default function Galeria() {
     const [listCategory, setListCategory] = useState([])
 
     const renderList = async () => {
-        const response =  await axios.get(`http://localhost:3001/api/category/${user_id}`);
+        
 
-        setListCategory(response.data.category)
+        try {
+            const response =  await axios.get(`http://localhost:3001/api/category/${user_id}`);
+            
+            if(response.data.category === null){
+                setListCategory(['none']);
+            }else{
+                setListCategory(response.data.category);
+            }
+            
+        } catch (error) {
+            // Tratar erro
+            console.log({error})
+        }
+
+        
     }
 
     renderList();
 
-
-    // console.log(response.data.category)
     return(
         <>
             <Header />
@@ -43,9 +55,9 @@ export default function Galeria() {
                     <div className="header-category">
                         <select className="btn-category">
                             <option value="">Categorias</option>
-                            {listCategory.map((item, i) => (
+                            {listCategory ? listCategory.map((item, i) => (
                                 <option key={i}>{item}</option>
-                            ))}
+                            )): ''}
                         </select>
                     </div>
 

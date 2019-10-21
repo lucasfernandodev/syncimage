@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import Config from "./Config";
 
 import './style.css';
@@ -42,17 +42,17 @@ export default function Upload(props) {
                                     <li>
                                         <h3 
                                         onClick={event => setConfigMenu('option')}
-                                        className={configMenu == 'option' ? "select" : "" || configMenu == '' ? "select" : ""}>Opções</h3>
+                                        className={configMenu === 'option' ? "select" : "" || configMenu === '' ? "select" : ""}>Opções</h3>
                                     </li>
                                     <li>
                                         <h3
                                         onClick={event => setConfigMenu('description')}
-                                        className={configMenu == 'description' ? "select" : ""}>Descrição</h3>
+                                        className={configMenu === 'description' ? "select" : ""}>Descrição</h3>
                                     </li>
                                     <li>
                                         <h3
                                         onClick={event => setConfigMenu('avancado')}
-                                        className={configMenu == 'avancado' ? "select" : ""}>Avançado</h3>
+                                        className={configMenu === 'avancado' ? "select" : ""}>Avançado</h3>
                                     </li>
                                 </ul>
                             </div>

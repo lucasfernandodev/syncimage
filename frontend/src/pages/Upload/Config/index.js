@@ -144,7 +144,7 @@ export default function Config(props) {
                     onClose={(e) => { setAlertDisplay(false) }}
                 />
 
-            {redirect == true ? <Redirect to={{ pathname: "/editar", state: { data: image} }} /> : ''}
+            
             </div>
 
         )
