@@ -50,9 +50,15 @@ export default function Galeria() {
 
     }, [uploadDisplay])
 
+   // Detect when scrolled to bottom.
+   let selct = document.querySelector('body');
 
-
-
+   document.addEventListener('scroll', function() {
+    console.log(' ')
+    if (document.documentElement.scrollTop + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+      console.log('final')
+    }
+  });
 
 
 
@@ -92,9 +98,7 @@ export default function Galeria() {
                         {images ? images.map(item => (
 
                             <li className="card-image" key={item._id}>
-                                <div className="card-header">
-                                    <img src={item.link} alt="" className="card-img" />
-                                </div>
+                               <img src={item.link} alt="" className="card-img" />
                             </li>
                         )) : 'Sem imagens no momento!'}
 
