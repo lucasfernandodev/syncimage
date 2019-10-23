@@ -4,7 +4,7 @@ import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import Galeria from './pages/Galeria';
 import Login from './pages/Login';
 import Cadastro from './pages/Cadastro';
-import Upload from './pages/Upload';
+// import Upload from './pages/Upload';
 import Erro404 from './pages/Erro404';
 
 const username = localStorage.getItem('user_id');

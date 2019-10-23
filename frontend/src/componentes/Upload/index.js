@@ -31,7 +31,7 @@ export default function Upload(props) {
                             className={preview ? 'has-image upload' : 'upload'}
                         >
                             <input type="file" id="upload" onChange={event => setImage(event.target.files[0])} accept="image/*" />
-                            <img src={camera}/>
+                            <img src={camera} alt=" user"/>
                             <span>Escolher imagem</span>
                         </label>
                     </div>

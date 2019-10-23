@@ -4,7 +4,7 @@ import Alert from "../../componentes/Alert";
 import ValidaForms from "../../componentes/ValidaForms";
 
 import "./style.css";
-import loading from "../../assets/loading.svg";
+import loadingSvg from "../../assets/loading.svg";
 import woman from "../../assets/woman.jpg";
 
 
@@ -12,71 +12,87 @@ export default function Login({ history }) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loginON, setLoginOn] = useState([])
 
 
     // alert
     const [alertDisplay, setAlertDisplay] = useState(false);
     const [alertContext, setAlertContext] = useState([]);
-    const [loginON, setLoginOn] = useState([])
+    const [alertType, setAlertType] = useState('')
+
+    const [loading, setLoading] = useState('Login')
+
 
     async function handlerLogin(e) {
         e.preventDefault();
+        setLoading('loading');
 
-        // const vEmail = ValidaForms(email, 'e-mail', { min: 4, max: 12 })
-        // const vPassword = ValidaForms(password, 'password', { min: 4, max: 16 })
+        const validaForm = await ValidaForms([
+            {
+                $campo: email, $nomeCampo: 'email', $rules: {
+                    min: 4,
+                    max: 32,
+                    type: String,
+                    required: true
+                }
+            },
+            {
+                $campo: password, $nomeCampo: 'password', $rules: {
+                    min: 4,
+                    max: 12,
+                    type: String,
+                    required: true
+                }
+            },
+            {
+                $campo: loginON, $nomeCampo: 'Lembrar-me', $rules: {
+                    type: Boolean,
+                    required: false
+                }
+            },
 
-        // if (vEmail.length > 0) {
-        //     setAlertContext({
-        //         title: "Falha ao logar",
-        //         messege: vEmail[0].messege
-        //     })
-        //     setAlertDisplay(true);
-        // }
+        ])
 
-        // if (vPassword.length > 0) {
-        //     setAlertContext({
-        //         title: "Falha ao logar",
-        //         messege: vPassword[0].messege
-        //     })
-        //     setAlertDisplay(true);
-        // }
+        if (validaForm !== false) {
+            setAlertContext({
+                title: "Falha ao logar",
+                messege: validaForm[0]
+            })
+            setAlertType('fail');
+            setAlertDisplay(true);
+            setLoading('login');
+        } else {
 
-        // if (vEmail.length === 0 && vPassword.length === 0) {
-   
-            
-        //     try {
-        //         const autheticate = await axios.post(`http://localhost:3001/api/authenticate`, {email, password});
-        //         localStorage.setItem('user_id', autheticate.data._id);
-        //         history.push('/galeria')
-
-                
-        //     } catch (err) {
-
-        //         const erro = {error: err};
-
-        //         if(erro.error.response){
-
-        //             const message = erro.error.response.data.message
-
-                  
-        //             setAlertContext({
-        //                 title: "Falha ao fazer login",
-        //                 messege: message
-        //             })
-        //             setAlertDisplay(true);
-        //         }else{
-        //             // Falha no servidor
-        //         }
-
-                
-        //     }
+            try {
+                const autheticate = await axios.post(`http://localhost:3001/api/authenticate`, { email, password });
+                localStorage.setItem('user_id', autheticate.data._id);
+                setLoading('login');
+                history.push('/galeria')
 
 
+            } catch (err) {
+
+                const erro = { error: err };
+
+                if (erro.error.response) {
+
+                    const message = erro.error.response.data.message
 
 
+                    setAlertContext({
+                        title: "Falha ao fazer login",
+                        messege: message
+                    })
+                    setAlertType('fail');
+                    setAlertDisplay(true);
+                    setLoading('login');
+                } else {
+                    // Falha no servidor
+                }
 
 
-        // }
+            }
+        }
     }
 
 
@@ -84,7 +100,7 @@ export default function Login({ history }) {
         <div className="container-main">
             <form className="form-login" onSubmit={handlerLogin}>
                 <div className="container-woman">
-                    <img src={woman} alt="" />
+                    <img src={woman} alt="Mulher de azul" />
                 </div>
                 <div className="content">
                     <h1 className="title">
@@ -121,11 +137,13 @@ export default function Login({ history }) {
                         <label htmlFor="lebrar-me">Manter conectado</label>
                     </div>
 
-                    <button className="btn-login">Login</button>
-                    <img src={loading} alt="" className="loading" />
-                    <span className="no-count">Não tem uma conta? <a href="#">Crie uma agora</a></span>
+                    <button className="btn-login">{loading === 'loading' ? (<img src={loadingSvg} className="loading" alt="Loading" />) : loading}</button>
+
+
+                    <span className="no-count">Não tem uma conta? <a href="/#">Crie uma agora</a></span>
                     <Alert
                         title={alertContext.title}
+                        type={alertType}
                         messege={alertContext.messege}
                         display={alertDisplay}
                         onClose={(e) => { setAlertDisplay(false) }} />

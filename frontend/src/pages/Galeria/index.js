@@ -57,11 +57,10 @@ export default function Galeria() {
     }, [uploadDisplay])
 
     const indexOfLastImage = currentPage * imagePorPage;
-    const indexOfFirstPost = indexOfLastImage - imagePorPage;
-    const currentImages = images.slice(1, indexOfLastImage)
+    // const indexOfFirstPost = indexOfLastImage - imagePorPage;
+    const currentImages = images.slice(0, indexOfLastImage)
 
    document.addEventListener('scroll', function() {
-    console.log(' ')
     if (document.documentElement.scrollTop + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
       if(currentImages < indexOfLastImage){
         var pagination = currentPage + 1;

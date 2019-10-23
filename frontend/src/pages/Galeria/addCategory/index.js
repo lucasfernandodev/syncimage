@@ -51,7 +51,7 @@ export default function AddCategory(props){
 
                     // Verifica se existe uma categoria igual no db
                     const filterArray = categoryData.filter(function(categoryData) {
-                        return categoryData == newCategory
+                        return categoryData === newCategory
                     })
                 
                     // Lembras de converter tudo pra minusculo

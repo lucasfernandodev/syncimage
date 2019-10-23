@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import axios from 'axios';
 
-import Validaforms from "../../../componentes/ValidaForms";
+import ValidaForms from "../../../componentes/ValidaForms";
 import Alert from "../../../componentes/Alert";
 import CompressImage from "../../../componentes/compress";
 
@@ -16,11 +16,10 @@ export default function Config(props) {
     const [categoria, setCategoria] = useState('none');
     const [privacy, setPrivacy] = useState('publico');
     const [description, setDescription] = useState('');
+    const [descriptionNone, setDescriptionNone] = useState(false);
     const [editionON, setEditionOn] = useState('Desativado');
 
-    // style Erro input
-    const [validaTitle, setValidaTitle] = useState(false);
-    const [validaDescription, setValidaDescription] = useState(false);
+
 
     // Categorias
     const [listCategory, setListCategory] = useState([])
@@ -49,65 +48,62 @@ export default function Config(props) {
     const image = props.data;
 
 
-        async function handleUpload(e) {
-            e.preventDefault();
+    async function handleUpload(e) {
+        e.preventDefault();
 
-            const vTitle = Validaforms(title, 'titulo', { min: 4, max: 16 })
-            const vCategoria = Validaforms(categoria, 'categoria')
-            const vPrivacy = Validaforms(privacy, 'privacidade')
-            const vDescription = Validaforms(description, 'Descrição', { min: 5, max: 300 })
-            const vEditionOn = Validaforms(editionON, 'Edição automatica')
 
-            if (vTitle.length !== 0) {
-                setAlertContext({
-                    title: "Falha ao salvar arquivo",
-                    messege: vTitle[0].messege
-                })
-                setAlertType('fail')
-                setValidaTitle(true)
-                setAlertDisplay(true)
-            }
+        if (descriptionNone === true) {
+            setDescription('Description none');
+        }
 
-            if (vCategoria.length !== 0) {
-                setAlertContext({
-                    title: "Falha ao salvar arquivo",
-                    messege: vCategoria[0].messege
-                })
-                setAlertType('fail')
-                setAlertDisplay(true)
+        const validaForm = await ValidaForms([
+            {
+                $campo: title, $nomeCampo: 'titulo', $rules: {
+                    min: 4,
+                    max: 16,
+                    type: String,
+                    required: true
+                }
+            },
+            {
+                $campo: categoria, $nomeCampo: 'categoria', $rules: {
+                    type: String,
+                    required: true
+                }
+            },
+            {
+                $campo: privacy, $nomeCampo: 'privacidade', $rules: {
+                    type: String,
+                    required: true
+                }
+            },
+            {
+                $campo: description, $nomeCampo: 'Descrição', $rules: {
+                    min: 8,
+                    max: 300,
+                    type: String,
+                    required: true
+                }
+            },
+            {
+                $campo: editionON, $nomeCampo: 'Edição automatica', $rules: {
+                    type: Boolean,
+                    required: false
+                }
+            },
 
-            }
+        ])
 
-            if (vPrivacy.length !== 0) {
-                setAlertContext({
-                    title: "Falha ao salvar arquivo",
-                    messege: vPrivacy[0].messege
-                })
-                setAlertType('fail')
-                setAlertDisplay(true)
+        if (validaForm !== false) {
+            setAlertContext({
+                title: "Falha ao logar",
+                messege: validaForm[0]
+            })
+            setAlertType('fail');
+            setAlertDisplay(true);
 
-            }
+        } else {
 
-            if (vDescription.length !== 0) {
-                setAlertContext({
-                    title: "Falha ao salvar arquivo",
-                    messege: vDescription[0].messege
-                })
-                setAlertType('fail')
-                setAlertDisplay(true)
-                setValidaDescription(true)
-
-            }
-
-            if (vEditionOn.length !== 0) {
-                setAlertContext({
-                    title: "Falha ao salvar arquivo",
-                    messege: vEditionOn[0].messege
-                })
-                setAlertType('fail')
-                setAlertDisplay(true)
-
-            }
 
             if (!image) {
                 setAlertContext({
@@ -131,11 +127,6 @@ export default function Config(props) {
 
                 }
 
-                if (alertContext.length === 0) {
-                    setValidaTitle(false)
-                    setValidaDescription(false)
-
-                }
 
                 const info = {
                     user_id,
@@ -170,8 +161,9 @@ export default function Config(props) {
                     console.log(`${error}`)
                 }
             }
-
         }
+
+    }
 
     function handleCancelar(e) {
         e.preventDefault();
@@ -226,7 +218,7 @@ export default function Config(props) {
                     <button className="btn btn-none" onClick={handleCancelar}>Cancelar</button>
                 </div>
 
-                <span>Teve algum problema? tente o <a href="#">upload normal</a></span>
+                <span>Teve algum problema? tente o <a href="/#">upload normal</a></span>
                 <Alert
                     type={alertType}
                     title={alertContext.title}
@@ -243,7 +235,7 @@ export default function Config(props) {
 
 
 
-    if (props.name == 'description') {
+    if (props.name === 'description') {
         return (
             <>
                 <div className="container-description">
@@ -253,13 +245,16 @@ export default function Config(props) {
                             id="description"
                             className='f-textarea'
                             onChange={event => setDescription(event.target.value)}
-                            value={description != '' ? description : ''}
+                            value={description !== '' ? description : ''}
                         >
                         </textarea>
                     </div>
 
                     <div className="form-row">
-                        <input type="checkbox" />
+                        <input type="checkbox"
+                            onClick={event => setDescriptionNone(event.target.value)}
+                            value={descriptionNone !== false ? descriptionNone : false}
+                        />
                         <span>Deixar em branco</span>
                     </div>
                     <span>A descrição é limitada a 300 caracteres, caso não queiera adicionar descrição, marque a opção acima.</span>
@@ -275,7 +270,7 @@ export default function Config(props) {
         )
     }
 
-    if (props.name == 'avancado') {
+    if (props.name === 'avancado') {
         return (
             <>
                 <div className="container-avancado">

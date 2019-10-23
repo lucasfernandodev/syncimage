@@ -27,7 +27,7 @@ export default function Cadastro({ history }) {
         e.preventDefault();
 
 
-        const ValidaForm = await ValidaForms([
+        const validaForm = await ValidaForms([
             {
                 $campo: username, $nomeCampo: 'username', $rules: {
                     min: 4,
@@ -61,10 +61,10 @@ export default function Cadastro({ history }) {
 
         ])
 
-        if (ValidaForm !== false) {
+        if (validaForm !== false) {
             setAlertContext({
                 title: "Falha ao cadastrar",
-                messege: ValidaForm[0]
+                messege: validaForm[0]
             })
             setAlertType('fail');
             setAlertDisplay(true);
@@ -78,6 +78,7 @@ export default function Cadastro({ history }) {
                     password: password
                 });
                 localStorage.setItem("user_id", response.data._id);
+                localStorage.setItem("login", true);
 
                 setAlertContext({
                     title: "Sucesso ao cadastrar",
@@ -100,6 +101,7 @@ export default function Cadastro({ history }) {
                         title: "Falha ao cadastrar",
                         messege: message
                     })
+                    setAlertType('fail');
                     setAlertDisplay(true);
                     setLoading('Cadastrar');
                 }
@@ -107,8 +109,6 @@ export default function Cadastro({ history }) {
 
             }
         }
-        console.log(ValidaForm)
-
 
     }
 
