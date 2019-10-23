@@ -10,16 +10,17 @@ import woman from "../../assets/woman.jpg";
 
 export default function Login({ history }) {
 
+    // Form
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginON, setLoginOn] = useState([])
 
 
-    // alert
+    // Alert
+    const [alertContent, setAlertContent] = useState({})
     const [alertDisplay, setAlertDisplay] = useState(false);
-    const [alertContext, setAlertContext] = useState([]);
-    const [alertType, setAlertType] = useState('')
 
+    // Loading
     const [loading, setLoading] = useState('Login')
 
 
@@ -27,6 +28,7 @@ export default function Login({ history }) {
         e.preventDefault();
         setLoading('loading');
 
+        // Valdia o formulario
         const validaForm = await ValidaForms([
             {
                 $campo: email, $nomeCampo: 'email', $rules: {
@@ -54,11 +56,12 @@ export default function Login({ history }) {
         ])
 
         if (validaForm !== false) {
-            setAlertContext({
+
+            setAlertContent({
                 title: "Falha ao logar",
-                messege: validaForm[0]
+                message: validaForm[0],
+                type: 'fail'
             })
-            setAlertType('fail');
             setAlertDisplay(true);
             setLoading('login');
         } else {
@@ -66,7 +69,7 @@ export default function Login({ history }) {
             try {
                 const autheticate = await axios.post(`http://localhost:3001/api/authenticate`, { email, password });
                 localStorage.setItem('user_id', autheticate.data._id);
-                setLoading('login');
+                setLoading('Login');
                 history.push('/galeria')
 
 
@@ -78,16 +81,16 @@ export default function Login({ history }) {
 
                     const message = erro.error.response.data.message
 
-
-                    setAlertContext({
-                        title: "Falha ao fazer login",
-                        messege: message
-                    })
-                    setAlertType('fail');
+                    setAlertContent({
+                        title: "Falha ao logar",
+                        message: message,
+                        type: 'fail'
+                    });
                     setAlertDisplay(true);
-                    setLoading('login');
+
+                    setLoading('Login');
                 } else {
-                    // Falha no servidor
+                    console.log(erro);
                 }
 
 
@@ -133,19 +136,19 @@ export default function Login({ history }) {
                         />
                     </div>
                     <div className="form-row">
-                        <input type="checkbox" id="lebrar-me" onChange={event => setLoginOn(event.target.checked)} />
+                        <input type="checkbox" id="lebrar-me" 
+                        onChange={event => setLoginOn(event.target.checked)} />
                         <label htmlFor="lebrar-me">Manter conectado</label>
                     </div>
 
                     <button className="btn-login">{loading === 'loading' ? (<img src={loadingSvg} className="loading" alt="Loading" />) : loading}</button>
 
 
-                    <span className="no-count">Não tem uma conta? <a href="/#">Crie uma agora</a></span>
+                    <span className="no-count">Não tem uma conta? <a href="/cadastro">Crie uma agora</a></span>
                     <Alert
-                        title={alertContext.title}
-                        type={alertType}
-                        messege={alertContext.messege}
+
                         display={alertDisplay}
+                        content={alertContent}
                         onClose={(e) => { setAlertDisplay(false) }} />
                 </div>
             </form>

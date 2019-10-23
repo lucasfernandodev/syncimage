@@ -9,19 +9,22 @@ export default function AddCategory(props){
 
     const [newCategory, setNewCategory] = useState('');
 
-    // Displayer
+
+    // Alert
     const [alertDisplay, setAlertDisplay] = useState(false);
-    const [alertMessege, setAlertMessege] = useState('');
-    const [alertTitle, setAlertTitle] = useState('');
-    const [alertType, setAlertType] = useState('primary');
+    const [alertcontent, setAlertContent] = useState([])
 
     async function handleCategory(e){
         e.preventDefault();
 
-        if(!newCategory || typeof(newCategory) === 'undefined' || newCategory === null || newCategory === ''){
-            setAlertTitle('Falha ao criar nova categoria');
-            setAlertMessege( 'Não deixe campos em branco!');
-            setAlertType('fail')
+        const category = newCategory.toLowerCase();
+
+        if(!category || typeof(category) === 'undefined' || category === null || category === ''){
+            setAlertContent({
+                title: "Falha ao criar nova categoria",
+                message: "Não deixe campos em branco!",
+                type: "fail"
+            })
             setAlertDisplay(true);
 
         }else{
@@ -33,16 +36,20 @@ export default function AddCategory(props){
                 // Verifica o array inteiro
                 if(response.data.category === null){
 
-                    if(!await axios.post(`http://localhost:3001/api/category`, {user_id, category :[newCategory]})){
+                    if(!await axios.post(`http://localhost:3001/api/category`, {user_id, category :[category]})){
                         
-                        setAlertTitle('Falha ao criar nova categoria');
-                        setAlertMessege( 'Tente novamente!');
-                        setAlertType('fail')
+                        setAlertContent({
+                            title: "Falha ao criar nova categoria",
+                            message: "Tente novamente!",
+                            type: "fail"
+                        })
                         setAlertDisplay(true);
                     }else{
-                        setAlertTitle('Sucesso ao criar categoria');
-                        setAlertMessege( 'A categoria foi adicionada a sua lista!');
-                        setAlertType('sucess')
+                        setAlertContent({
+                            title: "Sucesso ao criar categoria",
+                            message: "A categoria foi adicionada a sua lista!",
+                            type: "sucess"
+                        })
                         setAlertDisplay(true);
                     }
                 }else{
@@ -51,31 +58,37 @@ export default function AddCategory(props){
 
                     // Verifica se existe uma categoria igual no db
                     const filterArray = categoryData.filter(function(categoryData) {
-                        return categoryData === newCategory
+                        return categoryData === category
                     })
                 
                     // Lembras de converter tudo pra minusculo
                     if(!filterArray || filterArray.length === 0){
 
-                        categoryData.push(newCategory);
+                        categoryData.push(category);
 
                         if(!await axios.put(`http://localhost:3001/api/category/${user_id}`, {user_id, category : categoryData})){
-                            setAlertTitle('Falha ao criar nova categoria');
-                            setAlertMessege( 'Tente novamente!');
-                            setAlertType('fail')
+
+                            setAlertContent({
+                                title: "Falha ao criar nova categoria",
+                                message: "Tente novamente!",
+                                type: "fail"
+                            })
                             setAlertDisplay(true);
                         }else{
-                            setAlertTitle('Sucesso ao criar categoria');
-                            setAlertMessege( 'A categoria foi adicionada a sua lista!');
-                            setAlertType('sucess')
+
+                            setAlertContent({
+                                title: "Sucesso ao criar categoria",
+                                message: "A categoria foi adicionada a sua lista!",
+                                type: "sucess"
+                            })
                             setAlertDisplay(true);
                         }
                     }else{
-                        setAlertTitle('Falha ao criar nova categoria');
-                        setAlertMessege( 'Categoria digitada já existe!');
-                        setAlertDisplay(true);
-                        setAlertType('fail')
-                        console.log("Erro categoria já existe");
+                        setAlertContent({
+                            title: "Falha ao criar nova categoria",
+                            message: "Categoria digitada já existe!",
+                            type: "fail"
+                        })
                     }
                 }
 
@@ -107,7 +120,7 @@ export default function AddCategory(props){
                         </div>
                     </div>
                 </div>
-                <Alert type={alertType} display={alertDisplay} title={alertTitle} messege={alertMessege} onClose={event => setAlertDisplay(false)}/>
+                <Alert  content={alertcontent} display={alertDisplay} onClose={event => setAlertDisplay(false)}/>
             </div>
         )
     }else{

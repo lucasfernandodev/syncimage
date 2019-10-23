@@ -21,7 +21,6 @@ export default function Galeria() {
 
     // Array com imagens do bd
     const [images, setImages] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [imagePorPage, setImagePorPage] = useState(8)
 
@@ -56,8 +55,8 @@ export default function Galeria() {
 
     }, [uploadDisplay])
 
+    
     const indexOfLastImage = currentPage * imagePorPage;
-    // const indexOfFirstPost = indexOfLastImage - imagePorPage;
     const currentImages = images.slice(0, indexOfLastImage)
 
    document.addEventListener('scroll', function() {
@@ -110,7 +109,6 @@ export default function Galeria() {
                                <img src={item.link} alt="" className="card-img" />
                             </li>
                         )) : 'Sem imagens no momento!'}
-
 
                     </ul>
                 </main>

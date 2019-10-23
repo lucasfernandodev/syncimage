@@ -1,5 +1,4 @@
 function limiter($campo, $option = {}){
-    // {$min = '', $max = ''}
 
     if($option.$min !== ''){
         if($campo.length <= $option.$min){
@@ -9,7 +8,6 @@ function limiter($campo, $option = {}){
 
 
     if($option.$max !== ''){
-        console.log($campo.length);
         if($campo.length >= $option.$max){
            
             return false;
@@ -75,17 +73,6 @@ export default async function ValidaForms($data = []){
 
 
     }
-
-    // [
-    //     {$campo, $nomeCampo, $rules}
-    // ]
-
-    // $rules = {
-    //     min: Number,
-    //     max: Number,
-    //     type: Boolean & String & Number & Email,
-    //     required : Boolean // True or False
-    // }
 
 
     // Retorno

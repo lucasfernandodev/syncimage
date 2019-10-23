@@ -5,13 +5,14 @@ import ValidaForms from "../../../componentes/ValidaForms";
 import Alert from "../../../componentes/Alert";
 import CompressImage from "../../../componentes/compress";
 
-
+import loadingSvg from "../../../assets/loading.svg";
 
 const user_id = localStorage.getItem("user_id");
 
 
 export default function Config(props) {
 
+    // Form
     const [title, setTitle] = useState('');
     const [categoria, setCategoria] = useState('none');
     const [privacy, setPrivacy] = useState('publico');
@@ -19,15 +20,17 @@ export default function Config(props) {
     const [descriptionNone, setDescriptionNone] = useState(false);
     const [editionON, setEditionOn] = useState('Desativado');
 
-
-
     // Categorias
     const [listCategory, setListCategory] = useState([])
 
     // alert
     const [alertDisplay, setAlertDisplay] = useState(false);
-    const [alertContext, setAlertContext] = useState([]);
-    const [alertType, setAlertType] = useState('primary');
+    const [alertcontent, setAlertContent] = useState([])
+
+    // loading
+    const [loading, setLoading] = useState('Salvar')
+
+
 
     useMemo(async () => {
         try {
@@ -50,7 +53,7 @@ export default function Config(props) {
 
     async function handleUpload(e) {
         e.preventDefault();
-
+        setLoading('loading')
 
         if (descriptionNone === true) {
             setDescription('Description none');
@@ -95,22 +98,25 @@ export default function Config(props) {
         ])
 
         if (validaForm !== false) {
-            setAlertContext({
-                title: "Falha ao logar",
-                messege: validaForm[0]
+
+            setAlertContent({
+                title: "Falha ao realizar upload",
+                message: validaForm[0],
+                type: "fail"
             })
-            setAlertType('fail');
+            setLoading('Salvar')
             setAlertDisplay(true);
 
         } else {
 
 
             if (!image) {
-                setAlertContext({
+                setAlertContent({
                     title: "Falha ao fazer upload",
-                    messege: "Imagem invalida"
+                    message: "Imagem invalida",
+                    type: "fail"
                 })
-                setAlertType('fail')
+                setLoading('Salvar')
                 setAlertDisplay(true)
 
             }
@@ -118,11 +124,13 @@ export default function Config(props) {
 
             if (image) {
                 if (image.size >= 3000000) {
-                    setAlertContext({
+
+                    setAlertContent({
                         title: "Falha ao fazer upload",
-                        messege: "O Tamanho da imagem não deve exceder 5mb"
+                        message: "O Tamanho da imagem não deve exceder 5mb",
+                        type: "fail"
                     })
-                    setAlertType('fail')
+                    setLoading('Salvar')
                     setAlertDisplay(true)
 
                 }
@@ -142,23 +150,25 @@ export default function Config(props) {
                 const baseString = result.data;
 
                 try {
-                    const response = await axios.post('http://localhost:3001/api/image', { image: baseString, info })
-                    setAlertContext({
+                    await axios.post('http://localhost:3001/api/image', { image: baseString, info })
+
+                    setAlertContent({
                         title: "Sucesso ao fazer upload",
-                        messege: "A imagem foi adicionada a sua galeria!"
+                        message: "A imagem foi adicionada a sua galeria!",
+                        type: "sucess"
                     })
-                    setAlertType('sucess')
+                    setLoading('Salvar')
                     setAlertDisplay(true)
-                    console.log(response);
+                    // console.log(response);
 
                 } catch (error) {
-                    setAlertContext({
+                    setAlertContent({
                         title: "Falha ao fazer upload",
-                        messege: "Tente novamente!"
+                        message: "Tente novamente!",
+                        type: "fail"
                     })
-                    setAlertType('fail')
+                    setLoading('Salvar')
                     setAlertDisplay(true)
-                    console.log(`${error}`)
                 }
             }
         }
@@ -171,7 +181,6 @@ export default function Config(props) {
 
     // --------------------------------------------------------------------------------------
 
-    console.log(props.name)
 
     if (props.name === 'option' || !props.name) {
 
@@ -214,15 +223,13 @@ export default function Config(props) {
                 </div>
 
                 <div className="form-row">
-                    <button className="btn btn-primary" onClick={handleUpload}>Salvar</button>
+                    <button className="btn btn-primary" onClick={handleUpload}>{loading === 'loading' ? (<img src={loadingSvg} className="loading" alt="Loading" />) : loading}</button>
                     <button className="btn btn-none" onClick={handleCancelar}>Cancelar</button>
                 </div>
 
                 <span>Teve algum problema? tente o <a href="/#">upload normal</a></span>
                 <Alert
-                    type={alertType}
-                    title={alertContext.title}
-                    messege={alertContext.messege}
+                    content={alertcontent}
                     display={alertDisplay}
                     onClose={(e) => { setAlertDisplay(false) }}
                 />
@@ -260,9 +267,7 @@ export default function Config(props) {
                     <span>A descrição é limitada a 300 caracteres, caso não queiera adicionar descrição, marque a opção acima.</span>
                 </div>
                 <Alert
-                    title={alertContext.title}
-                    type={alertType}
-                    messege={alertContext.messege}
+                    content={alertcontent}
                     display={alertDisplay}
                     onClose={(e) => { setAlertDisplay(false) }}
                 />
@@ -285,9 +290,7 @@ export default function Config(props) {
                     </div>
                 </div>
                 <Alert
-                    type={alertType}
-                    title={alertContext.title}
-                    messege={alertContext.messege}
+                    content={alertcontent}
                     display={alertDisplay}
                     onClose={(e) => { setAlertDisplay(false) }}
                 />

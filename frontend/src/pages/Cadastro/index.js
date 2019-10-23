@@ -11,6 +11,7 @@ import woman from "../../assets/woman2.jpg";
 
 export default function Cadastro({ history }) {
 
+    // Form
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -18,13 +19,15 @@ export default function Cadastro({ history }) {
 
     // alert
     const [alertDisplay, setAlertDisplay] = useState(false);
-    const [alertContext, setAlertContext] = useState([]);
-    const [alertType, setAlertType] = useState('')
+    const [alertContent, setAlertContent] = useState({})
+
+    // loading
     const [loading, setLoading] = useState('Cadastrar')
 
     async function handleCadastrar(e) {
-        setLoading('loading');
         e.preventDefault();
+        setLoading('loading');
+
 
 
         const validaForm = await ValidaForms([
@@ -62,11 +65,11 @@ export default function Cadastro({ history }) {
         ])
 
         if (validaForm !== false) {
-            setAlertContext({
+            setAlertContent({
                 title: "Falha ao cadastrar",
-                messege: validaForm[0]
+                message: validaForm[0],
+                type: "fail"
             })
-            setAlertType('fail');
             setAlertDisplay(true);
             setLoading('Cadastrar');
         } else {
@@ -80,14 +83,6 @@ export default function Cadastro({ history }) {
                 localStorage.setItem("user_id", response.data._id);
                 localStorage.setItem("login", true);
 
-                setAlertContext({
-                    title: "Sucesso ao cadastrar",
-                    messege: "Bem vindo a SyncImage"
-                })
-
-                setAlertType('save');
-                setAlertDisplay(true);
-
                 history.push('/galeria');
 
             } catch (err) {
@@ -96,12 +91,11 @@ export default function Cadastro({ history }) {
                 if (erro.error.response) {
                     const message = erro.error.response.data.message
 
-                    console.log(erro.error.response)
-                    setAlertContext({
+                    setAlertContent({
                         title: "Falha ao cadastrar",
-                        messege: message
+                        message: message,
+                        type: "fail"
                     })
-                    setAlertType('fail');
                     setAlertDisplay(true);
                     setLoading('Cadastrar');
                 }
@@ -132,7 +126,7 @@ export default function Cadastro({ history }) {
                             type="text"
                             id="username"
                             className="f-input"
-                            placeholder="Lucas Fernando"
+                            placeholder="Seu nome"
                             onChange={event => setUsername(event.target.value)}
                         />
                     </div>
@@ -143,7 +137,7 @@ export default function Cadastro({ history }) {
                             type="email"
                             id="email"
                             className="f-input"
-                            placeholder="Lucas@exemplo.com"
+                            placeholder="Email.oficial@exemplo.com"
                             onChange={event => setEmail(event.target.value)}
                         />
                     </div>
@@ -170,9 +164,7 @@ export default function Cadastro({ history }) {
                 </div>
             </form>
             <Alert
-                type={alertType}
-                title={alertContext.title}
-                messege={alertContext.messege}
+                content={alertContent}
                 display={alertDisplay}
                 onClose={(e) => { setAlertDisplay(false) }}
             />

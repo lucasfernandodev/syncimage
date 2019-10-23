@@ -114,6 +114,7 @@ body{
 
 select option{
     color: #222;
+    text-transform: capitalize;
 }
 
 .content-galeria{
