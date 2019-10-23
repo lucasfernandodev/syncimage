@@ -12,6 +12,10 @@ mongoose.connect('mongodb+srv://admin:admin@clusterdev-fp9by.mongodb.net/asyncim
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
+}).then(function(response){
+    console.log(response)
+}).catch(function(err){
+    console.log(err)
 })
 
 app.use('/api', routes)

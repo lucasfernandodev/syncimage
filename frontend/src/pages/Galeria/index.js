@@ -12,12 +12,18 @@ const user_id = localStorage.getItem('user_id');
 
 export default function Galeria() {
 
+    // Modais
     const [uploadDisplay, setUploadDisplay] = useState(false);
     const [categoryDisplay, setCategoryDisplay] = useState(false);
 
-    const [listCategory, setListCategory] = useState([])
+    // Array com categorias das imagens
+    const [listCategory, setListCategory] = useState([]);
 
+    // Array com imagens do bd
     const [images, setImages] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [imagePorPage, setImagePorPage] = useState(8)
 
 
 
@@ -50,13 +56,17 @@ export default function Galeria() {
 
     }, [uploadDisplay])
 
-   // Detect when scrolled to bottom.
-   let selct = document.querySelector('body');
+    const indexOfLastImage = currentPage * imagePorPage;
+    const indexOfFirstPost = indexOfLastImage - imagePorPage;
+    const currentImages = images.slice(1, indexOfLastImage)
 
    document.addEventListener('scroll', function() {
     console.log(' ')
     if (document.documentElement.scrollTop + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
-      console.log('final')
+      if(currentImages < indexOfLastImage){
+        var pagination = currentPage + 1;
+        setCurrentPage(pagination)
+      }
     }
   });
 
@@ -95,7 +105,7 @@ export default function Galeria() {
                 <main className="main-galeria">
                     <ul className="content-galeria">
 
-                        {images ? images.map(item => (
+                        {images ? currentImages.map(item => (
 
                             <li className="card-image" key={item._id}>
                                <img src={item.link} alt="" className="card-img" />
