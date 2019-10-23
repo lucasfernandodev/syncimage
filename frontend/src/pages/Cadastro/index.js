@@ -26,85 +26,89 @@ export default function Cadastro({ history }) {
         setLoading('loading');
         e.preventDefault();
 
-        const vUsername = ValidaForms(username, 'username', { min: 4, max: 12 })
-        const vPassword = ValidaForms(password, 'password', { min: 4, max: 16 })
-        const vEmail = ValidaForms(email, 'email', { min: 4, max: 32 })
-        const vTermos = ValidaForms(termos, 'termos & condições', { type: Boolean })
 
-        if (vUsername.length > 0) {
+        const ValidaForm = await ValidaForms([
+            {
+                $campo: username, $nomeCampo: 'username', $rules: {
+                    min: 4,
+                    max: 12,
+                    type: String,
+                    required: true
+                }
+            },
+            {
+                $campo: email, $nomeCampo: 'email', $rules: {
+                    min: 4,
+                    max: 32,
+                    type: String,
+                    required: true
+                }
+            },
+            {
+                $campo: password, $nomeCampo: 'password', $rules: {
+                    min: 4,
+                    max: 12,
+                    type: String,
+                    required: true
+                }
+            },
+            {
+                $campo: termos, $nomeCampo: 'termos', $rules: {
+                    type: Boolean,
+                    required: true
+                }
+            },
+
+        ])
+
+        if (ValidaForm !== false) {
             setAlertContext({
                 title: "Falha ao cadastrar",
-                messege: vUsername[0].messege
+                messege: ValidaForm[0]
             })
+            setAlertType('fail');
             setAlertDisplay(true);
             setLoading('Cadastrar');
         } else {
-            if (vPassword.length > 0) {
+
+            try {
+                const response = await axios.post('http://localhost:3001/api/users', {
+                    name: username,
+                    email: email,
+                    password: password
+                });
+                localStorage.setItem("user_id", response.data._id);
+
                 setAlertContext({
-                    title: "Falha ao cadastrar",
-                    messege: vPassword[0].messege
+                    title: "Sucesso ao cadastrar",
+                    messege: "Bem vindo a SyncImage"
                 })
+
+                setAlertType('save');
                 setAlertDisplay(true);
-                setLoading('Cadastrar');
-            } else {
-                if (vEmail.length > 0) {
+
+                history.push('/galeria');
+
+            } catch (err) {
+                const erro = { error: err };
+
+                if (erro.error.response) {
+                    const message = erro.error.response.data.message
+
+                    console.log(erro.error.response)
                     setAlertContext({
                         title: "Falha ao cadastrar",
-                        messege: vEmail[0].messege
+                        messege: message
                     })
                     setAlertDisplay(true);
                     setLoading('Cadastrar');
-                } else {
-                    if (vTermos.length > 0) {
-                        setAlertContext({
-                            title: "Falha ao cadastrar",
-                            messege: vTermos[0].messege
-                        })
-                        setAlertDisplay(true);
-                        setLoading('Cadastrar');
-                    } else {
-
-                        try {
-                            const response = await axios.post('http://localhost:3001/api/users', {
-                                name: username,
-                                email: email,
-                                password: password
-                            });
-                            localStorage.setItem("user_id", response.data._id);
-
-                            setAlertContext({
-                                title: "Sucesso ao cadastrar",
-                                messege: "Bem vindo a SyncImage"
-                            })
-
-                            setAlertType('save');
-                            setAlertDisplay(true);
-
-                            history.push('/galeria');
-
-                        } catch (err) {
-                            const erro = {error: err};
-
-                            if(erro.error.response){
-                                const message = erro.error.response.data.message
-
-                                console.log(erro.error.response)
-                                setAlertContext({
-                                    title: "Falha ao cadastrar",
-                                    messege: message
-                                })
-                                setAlertDisplay(true);
-                                setLoading('Cadastrar');
-                            }
-
-                            
-                        }
-
-                    }
-
                 }
+
+
             }
         }
+        console.log(ValidaForm)
+
 
     }
 
@@ -161,8 +165,8 @@ export default function Cadastro({ history }) {
                         <label htmlFor="lebrar-me">Aceitar Termos e condições</label>
                     </div>
 
-                    <button className="btn-login">{loading === 'loading' ? (<img src={loadingSvg} className="loading"/>) : loading}</button>
-                   
+                    <button className="btn-login">{loading === 'loading' ? (<img src={loadingSvg} className="loading" alt="Loading" />) : loading}</button>
+
                 </div>
             </form>
             <Alert
@@ -170,7 +174,7 @@ export default function Cadastro({ history }) {
                 title={alertContext.title}
                 messege={alertContext.messege}
                 display={alertDisplay}
-                onClose={(e) => { setAlertDisplay(false) }} 
+                onClose={(e) => { setAlertDisplay(false) }}
             />
         </div>
     )

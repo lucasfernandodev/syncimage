@@ -22,61 +22,61 @@ export default function Login({ history }) {
     async function handlerLogin(e) {
         e.preventDefault();
 
-        const vEmail = ValidaForms(email, 'e-mail', { min: 4, max: 12 })
-        const vPassword = ValidaForms(password, 'password', { min: 4, max: 16 })
+        // const vEmail = ValidaForms(email, 'e-mail', { min: 4, max: 12 })
+        // const vPassword = ValidaForms(password, 'password', { min: 4, max: 16 })
 
-        if (vEmail.length > 0) {
-            setAlertContext({
-                title: "Falha ao logar",
-                messege: vEmail[0].messege
-            })
-            setAlertDisplay(true);
-        }
+        // if (vEmail.length > 0) {
+        //     setAlertContext({
+        //         title: "Falha ao logar",
+        //         messege: vEmail[0].messege
+        //     })
+        //     setAlertDisplay(true);
+        // }
 
-        if (vPassword.length > 0) {
-            setAlertContext({
-                title: "Falha ao logar",
-                messege: vPassword[0].messege
-            })
-            setAlertDisplay(true);
-        }
+        // if (vPassword.length > 0) {
+        //     setAlertContext({
+        //         title: "Falha ao logar",
+        //         messege: vPassword[0].messege
+        //     })
+        //     setAlertDisplay(true);
+        // }
 
-        if (vEmail.length === 0 && vPassword.length === 0) {
+        // if (vEmail.length === 0 && vPassword.length === 0) {
    
             
-            try {
-                const autheticate = await axios.post(`http://localhost:3001/api/authenticate`, {email, password});
-                localStorage.setItem('user_id', autheticate.data._id);
-                history.push('/galeria')
+        //     try {
+        //         const autheticate = await axios.post(`http://localhost:3001/api/authenticate`, {email, password});
+        //         localStorage.setItem('user_id', autheticate.data._id);
+        //         history.push('/galeria')
 
                 
-            } catch (err) {
+        //     } catch (err) {
 
-                const erro = {error: err};
+        //         const erro = {error: err};
 
-                if(erro.error.response){
+        //         if(erro.error.response){
 
-                    const message = erro.error.response.data.message
+        //             const message = erro.error.response.data.message
 
                   
-                    setAlertContext({
-                        title: "Falha ao fazer login",
-                        messege: message
-                    })
-                    setAlertDisplay(true);
-                }else{
-                    // Falha no servidor
-                }
+        //             setAlertContext({
+        //                 title: "Falha ao fazer login",
+        //                 messege: message
+        //             })
+        //             setAlertDisplay(true);
+        //         }else{
+        //             // Falha no servidor
+        //         }
 
                 
-            }
+        //     }
 
 
 
 
 
 
-        }
+        // }
     }
 
 
