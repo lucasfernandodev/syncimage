@@ -4,6 +4,7 @@ import Header from "../../componentes/header";
 import Footer from "../../componentes/footer";
 import Upload from '../../componentes/Upload';
 import AddCategory from "./addCategory";
+import Images from './images';
 import "./style.css";
 
 import camera from "../../assets/camera.svg";
@@ -18,24 +19,11 @@ export default function Galeria() {
 
     // Array com categorias das imagens
     const [listCategory, setListCategory] = useState([]);
-
-    // Array com imagens do bd
-    const [images, setImages] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [imagePorPage, setImagePorPage] = useState(8)
-
+    const [categorySelect, setCategorySelect] = useState('all')
 
 
     useEffect(() => {
         (async function () {
-            try {
-                const response = await axios.get(`http://localhost:3001/api/image/${user_id}`);
-                console.log(response)
-
-                setImages(response.data);
-            } catch (error) {
-                console.log(error)
-            }
 
             try {
                 const response = await axios.get(`http://localhost:3001/api/category/${user_id}`);
@@ -55,18 +43,7 @@ export default function Galeria() {
 
     }, [uploadDisplay])
 
-    
-    const indexOfLastImage = currentPage * imagePorPage;
-    const currentImages = images.slice(0, indexOfLastImage)
 
-   document.addEventListener('scroll', function() {
-    if (document.documentElement.scrollTop + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
-      if(currentImages < indexOfLastImage){
-        var pagination = currentPage + 1;
-        setCurrentPage(pagination)
-      }
-    }
-  });
 
 
 
@@ -84,10 +61,12 @@ export default function Galeria() {
                     </div>
 
                     <div className="header-category">
-                        <select className="btn-category">
-                            <option value="">Categorias</option>
+                        <select className="btn-category"
+                            onChange={event => setCategorySelect(event.target.value)}>
+                            <option value="all">All</option>
+
                             {listCategory ? listCategory.map((item, i) => (
-                                <option key={i}>{item}</option>
+                                <option value={item} key={i}>{item}</option>
                             )) : ''}
                         </select>
                     </div>
@@ -100,17 +79,10 @@ export default function Galeria() {
 
                 </header>
 
-                <main className="main-galeria">
-                    <ul className="content-galeria">
+                <main className="main-galeria">    
+  
+                    <Images/>
 
-                        {images ? currentImages.map(item => (
-
-                            <li className="card-image" key={item._id}>
-                               <img src={item.link} alt="" className="card-img" />
-                            </li>
-                        )) : 'Sem imagens no momento!'}
-
-                    </ul>
                 </main>
             </div>
 

@@ -8,12 +8,18 @@ export default function Upload(props) {
     const [image, setImage] = useState(null);
     const [configMenu, setConfigMenu] = useState('');
 
+    useMemo(() => {
+        setImage(null);
+    },[props.display])
+
     // Gera um preview da imagem
     const preview = useMemo(
         () => {
             return image ? URL.createObjectURL(image) : image
         }, [image]
     )
+
+
 
     if(props.display){
         return (

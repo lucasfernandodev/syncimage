@@ -114,7 +114,7 @@ body{
 
 select option{
     color: #222;
-    text-transform: capitalize;
+
 }
 
 .content-galeria{
@@ -126,6 +126,7 @@ select option{
 .content-galeria .card-image{
     height: 200px;
     max-width: calc(340px); /* largura máxima dos boxes*/
+    min-width: 180px;
 
     flex-grow: 1;
     cursor: pointer;

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import axios from 'axios';
 
 import ValidaForms from "../../../componentes/ValidaForms";
@@ -14,7 +14,7 @@ export default function Config(props) {
 
     // Form
     const [title, setTitle] = useState('');
-    const [categoria, setCategoria] = useState('none');
+    const [categoria, setCategoria] = useState('all');
     const [privacy, setPrivacy] = useState('publico');
     const [description, setDescription] = useState('');
     const [descriptionNone, setDescriptionNone] = useState(false);
@@ -48,6 +48,13 @@ export default function Config(props) {
         }
     }, [])
 
+
+    useEffect(()=> {
+        if (descriptionNone === true) {
+            setDescription('Description none');
+        }
+    }, [descriptionNone])
+
     const image = props.data;
 
 
@@ -55,9 +62,7 @@ export default function Config(props) {
         e.preventDefault();
         setLoading('loading')
 
-        if (descriptionNone === true) {
-            setDescription('Description none');
-        }
+
 
         const validaForm = await ValidaForms([
             {
@@ -204,8 +209,9 @@ export default function Config(props) {
                         onChange={event => setCategoria(event.target.value)}
                         value={categoria !== '' ? categoria : ''}
                     >
+                        <option value="all">All</option>
                         {listCategory ? listCategory.map((item, i) => (
-                            <option key={i}>{item}</option>
+                            <option value={item} key={i}>{item}</option>
                         )) : ''}
                     </select>
                 </div>
@@ -258,10 +264,14 @@ export default function Config(props) {
                     </div>
 
                     <div className="form-row">
-                        <input type="checkbox"
-                            onClick={event => setDescriptionNone(event.target.value)}
-                            value={descriptionNone !== false ? descriptionNone : false}
-                        />
+                        {descriptionNone === false ? (<input type="checkbox"
+                            onClick={event => setDescriptionNone(true)}
+
+                        />) : (<input type="checkbox"
+                            onClick={event => setDescriptionNone(false)}
+                            checked="checked"
+                        />)}
+
                         <span>Deixar em branco</span>
                     </div>
                     <span>A descrição é limitada a 300 caracteres, caso não queiera adicionar descrição, marque a opção acima.</span>

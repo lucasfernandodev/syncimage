@@ -89,6 +89,7 @@ export default function AddCategory(props){
                             message: "Categoria digitada já existe!",
                             type: "fail"
                         })
+                        setAlertDisplay(true);
                     }
                 }
 
