@@ -4,7 +4,7 @@ import Header from "../../componentes/header";
 import Footer from "../../componentes/footer";
 import Upload from '../../componentes/Upload';
 import AddCategory from "./addCategory";
-import Images from './images';
+import LoadingImages from "../../componentes/LoadingImages";
 import "./style.css";
 
 import camera from "../../assets/camera.svg";
@@ -81,7 +81,7 @@ export default function Galeria() {
 
                 <main className="main-galeria">    
   
-                    <Images/>
+                    <LoadingImages/>
 
                 </main>
             </div>
