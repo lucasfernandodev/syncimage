@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import ValidaForms from "../../../componentes/ValidaForms";
 import Alert from "../../../componentes/Alert";
-import CompressImage from "../../../componentes/compress";
+import CompressImage from "../../../componentes/CompressImage";
 
 import loadingSvg from "../../../assets/loading.svg";
 
