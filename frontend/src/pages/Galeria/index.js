@@ -45,7 +45,7 @@ export default function Galeria() {
 
 
 
-
+  
 
     return (
         <>
@@ -81,7 +81,7 @@ export default function Galeria() {
 
                 <main className="main-galeria">    
   
-                    <LoadingImages/>
+                    <LoadingImages filter={categorySelect}/>
 
                 </main>
             </div>
