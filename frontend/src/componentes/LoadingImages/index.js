@@ -46,31 +46,31 @@ export default function LoadingImages(props) {
         if (props.filter !== 'all') {
             if (imagesTrue) {
 
-                if(imageData){
+                if (imageData) {
                     const filtrado = imageData.filter(function (obj) {
                         return obj.category === props.filter;
                     });
                     if (filtrado) {
-    
+
                         console.log(filtrado)
                         setImagesTrue(filtrado);
-    
+
                         const currentImages = filtrado.slice(0, 6);
                         setListItems(currentImages);
                     }
                 }
-                
+
 
             }
 
         } else {
-            console.log('teste')
-            if(imageData){
+
+            if (imageData) {
                 setImagesTrue(imageData);
                 const currentImages = imageData.slice(0, 6);
                 setListItems(currentImages);
             }
-            
+
         }
     }, [props.filter])
 
@@ -87,21 +87,24 @@ export default function LoadingImages(props) {
     useEffect(() => {
         function fetchMoreListItems() {
 
-            const arrayLenght = imagesTrue.length - 1;
+            if (imagesTrue) {
+                const arrayLenght = imagesTrue.length - 1;
 
-            if (arrayLenght >= currentPage) {
+                if (arrayLenght >= currentPage) {
 
-                // Carrega mais itens a lista
-                const indexOfLastImage = currentPage * imagesporpage;
-                const currentImages = imagesTrue.slice(0, indexOfLastImage);
-                setListItems(currentImages);
+                    // Carrega mais itens a lista
+                    const indexOfLastImage = currentPage * imagesporpage;
+                    const currentImages = imagesTrue.slice(0, indexOfLastImage);
+                    setListItems(currentImages);
 
-                // Atualiza a pagina atual do carregamento
-                var i = currentPage + 1;
-                setCurrentPage(i)
+                    // Atualiza a pagina atual do carregamento
+                    var i = currentPage + 1;
+                    setCurrentPage(i)
 
-                // Declara que não prescisa buscar mais
-                setIsFetching(false);
+                    // Declara que não prescisa buscar mais
+                    setIsFetching(false);
+                }
+
             } else {
 
                 setIsFetching(false);
@@ -123,18 +126,18 @@ export default function LoadingImages(props) {
 
 
 
-
-
-
     // Renderiza o componente
     return (
-        <ul className="content-galeria">
-            {listItems ? listItems.map(item => (
+        <>
+            <ul className="content-galeria">
+                {listItems ? listItems.map(item => (
 
-                <li className="card-image" key={item._id}>
-                    <img src={item.link} alt={item.title} className="card-img" />
-                </li>
-            )) : 'Galeria Vazia'}
-        </ul>
+                    <li className="card-image" key={item._id}>
+                        <img src={item.link} alt={item.title} className="card-img" />
+                    </li>
+                )) : ''}
+            </ul>
+            {isFetching && 'Carregando...'}
+        </>
     );
 };
