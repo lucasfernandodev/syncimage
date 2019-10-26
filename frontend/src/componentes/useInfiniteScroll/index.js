@@ -1,14 +1,8 @@
 import { useState, useEffect } from 'react';
 
 const useInfiniteScroll = (callback) => {
-    
-    const [isFetching, setIsFetching] = useState(false);
 
-    // Captura o evento de rolagem
-    useEffect(() => {
-        window.addEventListener('scroll', debounce(handleScroll, 500));
-        return () => window.removeEventListener('scroll', debounce(handleScroll, 500));
-    }, []);
+    const [isFetching, setIsFetching] = useState(false);
 
 
     // Retorno da função
@@ -17,14 +11,30 @@ const useInfiniteScroll = (callback) => {
         callback(() => {
             console.log('called back');
         });
-    }, [isFetching]);
+    });
+    
+
+    // Captura o evento de rolagem
+    useEffect(() => {
+        window.addEventListener('scroll', debounce(function () {
+
+            // Verifica se o scroll está no final da pagina
+            if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isFetching) return;
+            setIsFetching(true);
+        }, 500));
 
 
-    // Verifica se o scroll ta no final
-    function handleScroll() {
-        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isFetching) return;
-        setIsFetching(true);
-    }
+        return () => 
+        window.removeEventListener('scroll', debounce(function () {
+
+            // Verifica se o scroll está no final da pagina
+            if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isFetching) return;
+            setIsFetching(true);
+        }, 500));
+    });
+
+
+    
 
     // Remove bugs do Scroll
     const debounce = (func, delay) => {

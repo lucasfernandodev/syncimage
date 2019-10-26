@@ -100,7 +100,6 @@ export default function LoadingImages(props) {
 
             setIsFetching(false);
         }
-        console.log('casa')
     }
 
     // Renderiza o componente
@@ -114,7 +113,6 @@ export default function LoadingImages(props) {
                     </li>
                 )) : ''}
             </ul>
-            {isFetching && 'Carregando...'}
         </>
     );
 };
