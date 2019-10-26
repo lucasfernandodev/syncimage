@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import useInfiniteScroll from '../useInfiniteScroll';
 import axios from 'axios';
 
 const user_id = localStorage.getItem("user_id");
@@ -12,7 +13,7 @@ export default function LoadingImages(props) {
     // pagination
     const [currentPage, setCurrentPage] = useState(1)
     const imagesporpage = 6;
-
+    const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
 
 
 
@@ -74,57 +75,33 @@ export default function LoadingImages(props) {
         }
     }, [props.filter])
 
-    // Captura o evento de scroll
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
+    function fetchMoreListItems() {
 
-    const [isFetching, setIsFetching] = useState(false);
+        if (imagesTrue) {
+            const arrayLenght = imagesTrue.length - 1;
 
-    // Verifica se é pra carregar mais imagens
-    useEffect(() => {
-        function fetchMoreListItems() {
+            if (arrayLenght >= currentPage) {
 
-            if (imagesTrue) {
-                const arrayLenght = imagesTrue.length - 1;
+                // Carrega mais itens a lista
+                const indexOfLastImage = currentPage * imagesporpage;
+                const currentImages = imagesTrue.slice(0, indexOfLastImage);
+                setListItems(currentImages);
 
-                if (arrayLenght >= currentPage) {
+                // Atualiza a pagina atual do carregamento
+                var i = currentPage + 1;
+                setCurrentPage(i)
 
-                    // Carrega mais itens a lista
-                    const indexOfLastImage = currentPage * imagesporpage;
-                    const currentImages = imagesTrue.slice(0, indexOfLastImage);
-                    setListItems(currentImages);
-
-                    // Atualiza a pagina atual do carregamento
-                    var i = currentPage + 1;
-                    setCurrentPage(i)
-
-                    // Declara que não prescisa buscar mais
-                    setIsFetching(false);
-                }
-
-            } else {
-
+                // Declara que não prescisa buscar mais
                 setIsFetching(false);
             }
+        
+        } else {
 
+            setIsFetching(false);
         }
-
-        if (!isFetching) return;
-
-        fetchMoreListItems();
-    });
-
-
-    // Verifica se o scroll do mouse tá no fim da pagina
-    function handleScroll() {
-        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
-        setIsFetching(true);
+        console.log('casa')
     }
-
-
 
     // Renderiza o componente
     return (
