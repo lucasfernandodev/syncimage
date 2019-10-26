@@ -9,11 +9,53 @@ export default function LoadingImages(props) {
     // images
     const [listItems, setListItems] = useState(null);
     const [imagesTrue, setImagesTrue] = useState(null)
-    const [imageData, setImageData] = useState(null)
+
     // pagination
     const [currentPage, setCurrentPage] = useState(1)
     const imagesporpage = 6;
     const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
+
+
+    const [imageData, setImageData] = useState(null)
+
+    useEffect(() => {
+
+
+
+        function filterArray() {
+            if (imageData) {
+                if (props.filter !== 'all') {
+
+                    if (imageData) {
+                        const filtrado = imageData.filter(function (obj) {
+                            return obj.category === props.filter;
+                        });
+
+
+                        if (filtrado) {
+
+                            setImagesTrue(filtrado);
+
+                            const currentImages = filtrado.slice(0, 6);
+                            setListItems(currentImages);
+                        }
+                    }
+                } else {
+
+
+                    const data = imageData;
+                    setImagesTrue(data);
+                    const currentImages = imageData.slice(0, 6);
+                    setListItems(currentImages);
+
+
+                }
+            }
+        }
+        filterArray();
+
+
+    }, [props.filter, imageData])
 
 
 
@@ -24,14 +66,17 @@ export default function LoadingImages(props) {
                 // Busca as imagens
                 const response = await axios.get(`http://localhost:3001/api/image/${user_id}`);
 
+                const data = response.data;
+                setImageData(data)
+
                 // Salva todas as imagens
                 setImagesTrue(response.data);
 
                 // Carrega as 6 primeiras imagens
-                const data = response.data;
+
                 const currentImages = data.slice(0, 6);
                 setListItems(currentImages);
-                setImageData(data)
+
 
 
             } catch (error) {
@@ -43,41 +88,11 @@ export default function LoadingImages(props) {
 
     }, [])
 
-    useEffect(() => {
-        if (props.filter !== 'all') {
-            if (imagesTrue) {
-
-                if (imageData) {
-                    const filtrado = imageData.filter(function (obj) {
-                        return obj.category === props.filter;
-                    });
-                    if (filtrado) {
-
-                        console.log(filtrado)
-                        setImagesTrue(filtrado);
-
-                        const currentImages = filtrado.slice(0, 6);
-                        setListItems(currentImages);
-                    }
-                }
 
 
-            }
-
-        } else {
-
-            if (imageData) {
-                setImagesTrue(imageData);
-                const currentImages = imageData.slice(0, 6);
-                setListItems(currentImages);
-            }
-
-        }
-    }, [props.filter])
 
 
     function fetchMoreListItems() {
-
         if (imagesTrue) {
             const arrayLenght = imagesTrue.length - 1;
 
@@ -93,9 +108,9 @@ export default function LoadingImages(props) {
                 setCurrentPage(i)
 
                 // Declara que não prescisa buscar mais
-                setIsFetching(false);
+ 
             }
-        
+            setIsFetching(false);
         } else {
 
             setIsFetching(false);
@@ -112,6 +127,7 @@ export default function LoadingImages(props) {
                         <img src={item.link} alt={item.title} className="card-img" />
                     </li>
                 )) : ''}
+
             </ul>
         </>
     );
