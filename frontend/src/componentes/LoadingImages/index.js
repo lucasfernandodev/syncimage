@@ -3,7 +3,7 @@ import useInfiniteScroll from '../useInfiniteScroll';
 import axios from 'axios';
 
 const user_id = localStorage.getItem("user_id");
-
+const token = localStorage.getItem("token");
 export default function LoadingImages(props) {
 
     // images
@@ -64,7 +64,9 @@ export default function LoadingImages(props) {
         (async function () {
             try {
                 // Busca as imagens
-                const response = await axios.get(`http://localhost:3001/api/image/${user_id}`);
+                const response = await axios.get(`http://localhost:3001/api/image/${user_id}`, {headers: {
+                    authorization: token
+                }});
 
                 const data = response.data;
                 setImageData(data)

@@ -68,7 +68,11 @@ export default function Login({ history }) {
 
             try {
                 const autheticate = await axios.post(`http://localhost:3001/api/authenticate`, { email, password });
-                localStorage.setItem('user_id', autheticate.data._id);
+                
+                
+                console.log(autheticate)
+                localStorage.setItem('token', `Bearer ${autheticate.data.token}`);
+                localStorage.setItem('user_id', autheticate.data.user._id);
                 setLoading('Login');
                 history.push('/galeria')
 

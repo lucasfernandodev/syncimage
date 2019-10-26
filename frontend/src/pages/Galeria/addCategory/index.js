@@ -4,6 +4,7 @@ import axios from 'axios';
 import './style.css';
 
 const user_id = localStorage.getItem('user_id');
+const token = localStorage.getItem('token');
 
 export default function AddCategory(props){
 
@@ -31,12 +32,18 @@ export default function AddCategory(props){
 
             try {
 
-                const response = await axios.get(`http://localhost:3001/api/category/${user_id}`);
+                const response = await axios.get(`http://localhost:3001/api/category/${user_id}`, {headers: {
+                    authorization: token
+                }});
 
                 // Verifica o array inteiro
                 if(response.data.category === null){
 
-                    if(!await axios.post(`http://localhost:3001/api/category`, {user_id, category :[category]})){
+                    if(!await axios.post(`http://localhost:3001/api/category`, {user_id, category :[category]},
+                        {headers: {
+                            authorization: token
+                        }}
+                    )){
                         
                         setAlertContent({
                             title: "Falha ao criar nova categoria",
@@ -66,7 +73,11 @@ export default function AddCategory(props){
 
                         categoryData.push(category);
 
-                        if(!await axios.put(`http://localhost:3001/api/category/${user_id}`, {user_id, category : categoryData})){
+                        if(!await axios.put(`http://localhost:3001/api/category/${user_id}`, {user_id, category : categoryData},
+                            {headers: {
+                                authorization: token
+                            }}
+                        )){
 
                             setAlertContent({
                                 title: "Falha ao criar nova categoria",

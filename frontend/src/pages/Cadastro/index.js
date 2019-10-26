@@ -80,7 +80,9 @@ export default function Cadastro({ history }) {
                     email: email,
                     password: password
                 });
-                localStorage.setItem("user_id", response.data._id);
+                localStorage.setItem('token', `Bearer ${response.data.token}`);
+
+                localStorage.setItem("user_id", response.data.user._id);
                 localStorage.setItem("login", true);
 
                 history.push('/galeria');

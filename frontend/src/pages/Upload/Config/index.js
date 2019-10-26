@@ -3,6 +3,8 @@ import Validaforms from "../../../componentes/ValidaForms";
 import Alert from "../../../componentes/Alert";
 import { Redirect } from "react-router-dom";
 
+const token = localStorage.getItem('token');
+
 export default function Config(props) {
 
     const [title, setTitle] = useState('');

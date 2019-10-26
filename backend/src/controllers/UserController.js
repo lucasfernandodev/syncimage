@@ -1,10 +1,20 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const authConfig = require('../config/auth.json');
+
 require("../models/user");
 
 
+function generateToken(params = {}){       
+    return jwt.sign(params, authConfig.secret, {
+        expiresIn: 86400,
+    });
+}
+
 const User = mongoose.model("User");
 module.exports = {
+
     async index(req, res){
         const users = await User.find();
 
@@ -25,9 +35,12 @@ module.exports = {
             return res.status(400).send({message: "Senha digitada está incorreta!"})
         }
 
-        const { _id } = user;
+        user.password = undefined;
 
-        return res.json({_id});
+        return res.json({
+            user, 
+            token: generateToken({id: user.id})
+        });
 
     },
 
@@ -48,9 +61,12 @@ module.exports = {
 
         const user = await User.create(req.body);
 
-        user.password == undefined;
+        user.password = undefined;
 
-        return res.json(user)
+        return res.json({
+            user,
+            token: generateToken({id: user.id})
+        })
     },
 
     async update(req, res){

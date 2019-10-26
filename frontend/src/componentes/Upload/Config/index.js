@@ -8,6 +8,7 @@ import CompressImage from "../../../componentes/CompressImage";
 import loadingSvg from "../../../assets/loading.svg";
 
 const user_id = localStorage.getItem("user_id");
+const token = localStorage.getItem("token");
 
 
 export default function Config(props) {
@@ -34,7 +35,9 @@ export default function Config(props) {
 
     useMemo(async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/api/category/${user_id}`);
+            const response = await axios.get(`http://localhost:3001/api/category/${user_id}`, {headers: {
+                authorization: token
+            }});
 
             if (response.data.category === null) {
                 setListCategory(['none']);
@@ -155,7 +158,9 @@ export default function Config(props) {
                 const baseString = result.data;
 
                 try {
-                    await axios.post('http://localhost:3001/api/image', { image: baseString, info })
+                    await axios.post('http://localhost:3001/api/image', { image: baseString, info }, {headers: {
+                        authorization: token
+                    }})
 
                     setAlertContent({
                         title: "Sucesso ao fazer upload",
