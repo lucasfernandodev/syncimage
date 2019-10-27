@@ -70,7 +70,6 @@ export default function Login({ history }) {
                 const autheticate = await axios.post(`http://localhost:3001/api/authenticate`, { email, password });
                 
                 
-                console.log(autheticate)
                 localStorage.setItem('token', `Bearer ${autheticate.data.token}`);
                 localStorage.setItem('user_id', autheticate.data.user._id);
                 setLoading('Login');

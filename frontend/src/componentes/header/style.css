@@ -19,6 +19,30 @@
     align-items: center;
 }
 
+.async-header .container-logout{
+    position: absolute;
+    right: 0;
+    bottom: -15px;
+    width: 150px;
+    height: 30px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.async-header .user-content span a{
+    color: #2e86de;
+    font-size: 14px;
+    padding: 5px 0;
+    text-decoration: none;
+    transition: 0.8s linear;
+}
+
+.async-header .user-content span a:hover{
+    color: #2980b9;   
+}
+
 .async-header .user-content span{
     font-family: roboto, Arial, Helvetica, sans-serif;
     font-size: 16px;
