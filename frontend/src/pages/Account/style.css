@@ -53,7 +53,7 @@
     margin: 0 auto;
     background-size: cover;
     background-position: center center;
-    border: 4px solid #ff9f43;
+    /* border: 4px solid #ff9f43; */
 }
 
 .async-account .container .container-image .fild{
@@ -71,16 +71,12 @@
     line-height: 45px;
     text-align: center;
     cursor: pointer;
-    background: #3498db;
     display: block;
     font-family: roboto, Arial, Helvetica, sans-serif;
     color: #fff;
     font-weight: bold;
 }
 
-.async-account .container .container-image .fild label:hover{
-    background: #2980b9;
-}
 
 /* Container sobre */
 
@@ -92,7 +88,6 @@
 
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -110,13 +105,14 @@
 
 .async-account .container .container-sobre .fild textarea{
     font-size: 16px;
-    color: #bbb;
+    color: #666;
     width: 380px;
     height: 320px;
     resize: none;
     padding: 15px;
     border: 1px solid #ddd;
     outline: none;
+    font-family: roboto, Arial, Helvetica, sans-serif;
 }
 
 .async-account .container .container-sobre .fild span{
