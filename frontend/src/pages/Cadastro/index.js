@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import axios from "axios";
+import {
+    Redirect
+  } from 'react-router-dom'
 import Alert from "../../componentes/Alert";
 import ValidaForms from "../../componentes/ValidaForms";
 
@@ -9,7 +11,7 @@ import loadingSvg from "../../assets/loading.svg";
 import woman from "../../assets/woman2.jpg";
 
 
-export default function Cadastro({ history }) {
+export default function Cadastro() {
 
     // Form
     const [username, setUsername] = useState('');
@@ -17,12 +19,17 @@ export default function Cadastro({ history }) {
     const [email, setEmail] = useState('');
     const [termos, setTermos] = useState(false);
 
+    const [account, setAccount] = useState(false);
+
     // alert
     const [alertDisplay, setAlertDisplay] = useState(false);
-    const [alertContent, setAlertContent] = useState({})
+    const [alertContent, setAlertContent] = useState({});
+    
 
     // loading
-    const [loading, setLoading] = useState('Cadastrar')
+    const [loading, setLoading] = useState('Cadastrar');
+
+
 
     async function handleCadastrar(e) {
         e.preventDefault();
@@ -72,45 +79,21 @@ export default function Cadastro({ history }) {
             })
             setAlertDisplay(true);
             setLoading('Cadastrar');
-        } else {
 
-            try {
-                const response = await axios.post('http://localhost:3001/api/users', {
-                    name: username,
-                    email: email,
-                    password: password
-                });
-                localStorage.setItem('token', `Bearer ${response.data.token}`);
-
-                localStorage.setItem("user_id", response.data.user._id);
-                localStorage.setItem("login", true);
-
-                history.push('/galeria');
-
-            } catch (err) {
-                const erro = { error: err };
-
-                if (erro.error.response) {
-                    const message = erro.error.response.data.message
-
-                    setAlertContent({
-                        title: "Falha ao cadastrar",
-                        message: message,
-                        type: "fail"
-                    })
-                    setAlertDisplay(true);
-                    setLoading('Cadastrar');
-                }
-
-
-            }
+        }else{
+            setLoading('Cadastrar');
+            setAccount(true)
+          
         }
-
+        
+       
+        
     }
 
-
     return (
+        
         <div className="container-main">
+            {account  ? (<Redirect push to="/account" />) : ""}
             <form className="form-login" onSubmit={handleCadastrar}>
                 <div className="container-woman">
                     <img src={woman} alt="" />
@@ -170,6 +153,7 @@ export default function Cadastro({ history }) {
                 display={alertDisplay}
                 onClose={(e) => { setAlertDisplay(false) }}
             />
+  
         </div>
     )
 }

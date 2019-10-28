@@ -39,6 +39,7 @@ module.exports = {
 
         return res.json({
             user, 
+            avatar: user.avatar,
             token: generateToken({id: user.id})
         });
 
@@ -65,6 +66,7 @@ module.exports = {
 
         return res.json({
             user,
+            avatar: user.avatar,
             token: generateToken({id: user.id})
         })
     },

@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom'
 import Alert from '../../componentes/Alert';
 import './style.css'
@@ -7,17 +7,19 @@ import userImage from '../../assets/perfil.jpg';
 export default function Account(){
 
     const [image, setImage] = useState(null);
+    const [preview, setPreview] = useState(null)
     const [description, setDescription] = useState(null);
 
     const [alertDislay, setAlertDisplay] = useState(false);
     const [alertMessage, setAlertMessage] = useState({})
 
     // Gera um preview da imagem
-    const preview = useMemo(
-        () => {
-            return image ? URL.createObjectURL(image) : image
-        }, [image]
-    )
+        useEffect(() => {
+
+         setPreview(image ? URL.createObjectURL(image) : image)
+
+        }, [image])
+
 
     async function handlerSalvar(e){
         e.preventDefault();
@@ -57,7 +59,7 @@ export default function Account(){
                 <div className="container-sobre">
                 <div className="title"><h3>Fale um pouco sobre você</h3></div>
                 <div className="fild">
-                    <textarea cols="30" rows="10"></textarea>
+                    <textarea cols="30" rows="10" onChange={event => setDescription(event.target.value)}></textarea>
                 </div>
                 <div className="fild"><span>Escreva uma pequeno texto falando sobre você</span></div>
                 <div className="fild">
