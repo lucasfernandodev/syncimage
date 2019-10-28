@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import {
-    Redirect
-  } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import Alert from "../../componentes/Alert";
 import ValidaForms from "../../componentes/ValidaForms";
 
@@ -24,7 +22,7 @@ export default function Cadastro() {
     // alert
     const [alertDisplay, setAlertDisplay] = useState(false);
     const [alertContent, setAlertContent] = useState({});
-    
+
 
     // loading
     const [loading, setLoading] = useState('Cadastrar');
@@ -80,20 +78,25 @@ export default function Cadastro() {
             setAlertDisplay(true);
             setLoading('Cadastrar');
 
-        }else{
+        } else {
             setLoading('Cadastrar');
             setAccount(true)
-          
+
         }
-        
-       
-        
+
+
+
     }
 
     return (
-        
+
         <div className="container-main">
-            {account  ? (<Redirect push to="/account" />) : ""}
+            {account ? (<Redirect to={{
+                pathname: "/account",
+                data: {username, password, email},
+            }} />) : ""}
+
+
             <form className="form-login" onSubmit={handleCadastrar}>
                 <div className="container-woman">
                     <img src={woman} alt="" />
@@ -153,7 +156,7 @@ export default function Cadastro() {
                 display={alertDisplay}
                 onClose={(e) => { setAlertDisplay(false) }}
             />
-  
+
         </div>
     )
 }

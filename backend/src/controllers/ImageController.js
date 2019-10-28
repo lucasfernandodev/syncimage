@@ -73,5 +73,27 @@ module.exports = {
         return res.json(image);
     },
 
+    async storeAvatar(req, res){
+
+        const base_URL = 'https://api.imgur.com/3/image';
+        const headers = {
+            headers: {
+                'Authorization': 'Client-ID 0399bf5f8db335f'
+            }
+        }
+
+        const {image} = req.body;
+
+        
+        try {
+            const { data } = await axios.post(base_URL, {image}, headers);
+            return res.json(data)
+        } catch (error) {
+            return res.status(400).send(`Falha ao fazer o upload da imagem no imgur. ${error}`);
+        }
+
+        
+    }
+
  
 }

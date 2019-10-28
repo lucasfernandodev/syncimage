@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth.json');
+const imgur = require('../services/imgur')
 
 require("../models/user");
 
@@ -13,6 +14,8 @@ function generateToken(params = {}){
 }
 
 const User = mongoose.model("User");
+
+
 module.exports = {
 
     async index(req, res){
@@ -53,6 +56,7 @@ module.exports = {
 
     async store(req, res){
         const { email } = req.body;
+        let avatarlink = 'https://i.imgur.com/W1vjvxL.jpg';
 
         if(await User.findOne({email})){
 
@@ -60,15 +64,37 @@ module.exports = {
 
         }
 
-        const user = await User.create(req.body);
+        const {username, avatar, description, password} = req.body;
 
-        user.password = undefined;
+        if(avatar !== null){
+            const response= await imgur(avatar);
 
-        return res.json({
-            user,
-            avatar: user.avatar,
-            token: generateToken({id: user.id})
-        })
+            if(!response){
+                return res.status(400).send({message: "Erro ao salvar imagem de usuario"});
+            }
+
+            avatarlink = response.link;
+        }
+
+        
+
+        try {
+            const user = await User.create({username, avatar: avatarlink, description, email, password});
+           
+            user.password = undefined;
+
+            return res.json({
+                user,
+                avatar: user.avatar,
+                token: generateToken({id: user.id})
+            })
+
+            
+        } catch (error) {
+            return res.status(401).send({error: "Erro ao criar usuario"})
+        }
+
+
     },
 
     async update(req, res){

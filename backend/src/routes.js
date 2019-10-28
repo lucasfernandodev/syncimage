@@ -12,13 +12,14 @@ const routes = express.Router();
 routes.get('/users', UserController.index);
 routes.get('/users/:id', UserController.show);
 routes.post('/users', UserController.store);
-routes.put('/users/:id', UserController.update);
-routes.delete('/users/:id', UserController.destroy);
+routes.put('/users/:id',authMeddleware, UserController.update);
+routes.delete('/users/:id',authMeddleware, UserController.destroy);
 
 routes.post('/authenticate', UserController.authenticate);
 
 // Images
 routes.get('/image',authMeddleware,ImageController.index);
+routes.post('/avatar',authMeddleware,ImageController.storeAvatar);
 routes.get('/image/:id',authMeddleware,ImageController.show);
 routes.post('/image',authMeddleware, ImageController.store);
 
