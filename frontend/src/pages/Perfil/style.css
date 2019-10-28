@@ -103,6 +103,7 @@
     font-family: roboto, Arial, Helvetica, sans-serif;
     direction: rtl;
     padding-right: 30px;
+    justify-content: center;
     /* border: 1px solid red; */
 }
 

@@ -23,10 +23,6 @@ export default function Perfil() {
                         <span className="text">Lucas Fernando</span>
                     </div>
                     <div className="fild">
-                        <span className="title">Idade</span>
-                        <span className="text">18 anos</span>
-                    </div>
-                    <div className="fild">
                         <span className="title">E-mail</span>
                         <span className="text">Exemplo@gmail.com</span>
                     </div>
