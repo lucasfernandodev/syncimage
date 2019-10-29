@@ -68,12 +68,13 @@ export default function Login({ history }) {
 
             try {
                 const autheticate = await axios.post(`http://localhost:3001/api/authenticate`, { email, password });
-                
+                // console.log()
                 
                 localStorage.setItem('token', `Bearer ${autheticate.data.token}`);
                 localStorage.setItem('user_id', autheticate.data.user._id);
+                localStorage.setItem('avatar', autheticate.data.avatar);
                 setLoading('Login');
-                history.push('/galeria')
+
 
 
             } catch (err) {
@@ -98,6 +99,11 @@ export default function Login({ history }) {
 
 
             }
+
+            if(localStorage.getItem('token')){
+                history.push('/galeria')
+            }
+            
         }
     }
 

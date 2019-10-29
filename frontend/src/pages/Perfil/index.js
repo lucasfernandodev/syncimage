@@ -1,11 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Footer from '../../componentes/footer';
+import Header from '../../componentes/header';
 import './style.css';
 
 export default function Perfil() {
 
     return (
         <div className="async-perfil">
+
+            <header className="async-header">
+            
+                <Link to="/galeria" ><button className="btn-back"> Voltar a galeria</button></Link>
+
+            </header>
+
             <div className="container-perfil">
                 <div className="container-user">
                     <div className="container-user-image"></div>

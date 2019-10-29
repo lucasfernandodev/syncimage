@@ -3,7 +3,6 @@
     min-height: 100vh;
     overflow: hidden;
     overflow-y: auto;
-    padding-top: 100px;
 }
 
 .async-perfil .container-perfil{
@@ -12,7 +11,6 @@
 
     background: #fff;
     margin: 0 auto;
-    border-radius: 12px;
     overflow: hidden;
     position: relative;
     display: flex;

@@ -19,7 +19,6 @@ routes.post('/authenticate', UserController.authenticate);
 
 // Images
 routes.get('/image',authMeddleware,ImageController.index);
-routes.post('/avatar',authMeddleware,ImageController.storeAvatar);
 routes.get('/image/:id',authMeddleware,ImageController.show);
 routes.post('/image',authMeddleware, ImageController.store);
 

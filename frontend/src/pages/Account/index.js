@@ -58,22 +58,11 @@ export default function Account({history, location}) {
 
         if(image){
             const image64 = await CompressImage(image, 0.6);
-
-            const data64 = image64.data;
-
-            try {
-                const { data } = await axios.post('http://localhost:3001/api/avatar',{image: data64}, {
-                    headers: {
-                        authorization: token
-                    }
-                })
-
-                setAvatar(data.data.link)
-                handleCadastro('e')
-                console.log(data.data.link)
-            } catch (error) {
-                console.log({error})
+            if(image64){
+                setAvatar(image64.data)
             }
+
+            handleCadastro('e')
 
 
         }
@@ -92,7 +81,7 @@ export default function Account({history, location}) {
                 localStorage.setItem("avatar", response.data.avatar);
                 localStorage.setItem("login", true);
     
-                history.push('/galeria');
+               
     
             } catch (err) {
                 const erro = { error: err };
@@ -111,7 +100,9 @@ export default function Account({history, location}) {
     
             }
         
-
+            if(localStorage.getItem('token')){
+                history.push('/galeria');
+            }
 
         
 

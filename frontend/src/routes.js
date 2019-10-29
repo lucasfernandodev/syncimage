@@ -28,11 +28,11 @@ export default function Routes(){
         <BrowserRouter>
             <Switch>
                 <Route path="/" exact component={Login}/>
-                <Route path="/Login" exact component={Login}/>
+                <Route path="/login" exact component={Login}/>
                 <Route path="/cadastro" exact component={Cadastro}/>
-                <PrivateRoute path="/Perfil" exact component={Perfil}/>
-                <PrivateRoute path="/Account" exact component={Account}/>
-                <PrivateRoute path="/Galeria" component={Galeria}/>
+                <PrivateRoute path="/perfil" exact component={Perfil}/>
+                <Route path="/account" exact component={Account}/>
+                <PrivateRoute path="/galeria" component={Galeria}/>
                 <Route path="*" exact component={Erro404}/>
             </Switch>
         </BrowserRouter>

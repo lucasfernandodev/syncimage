@@ -71,3 +71,19 @@
 
     border: 2px solid #2e86de;
 }
+
+.async-header .btn-back{
+    background: none;
+    width: 220px;
+    height: 80px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    border: none;
+    font-size: 18px;
+}
+
+.async-header .btn-back:hover{
+    text-decoration: #2980b9 underline;
+}
