@@ -9,11 +9,7 @@ export default function Perfil() {
     return (
         <div className="async-perfil">
 
-            <header className="async-header">
-            
-                <Link to="/galeria" ><button className="btn-back"> Voltar a galeria</button></Link>
-
-            </header>
+            <Header link="true" rota="/galeria" placeholder="Voltar a galeria"/>
 
             <div className="container-perfil">
                 <div className="container-user">
