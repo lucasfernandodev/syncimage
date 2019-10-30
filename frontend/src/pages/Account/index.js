@@ -8,12 +8,10 @@ import userImage from '../../assets/perfil.jpg';
 
 export default function Account({history, location}) {
 
-    const token = localStorage.getItem('token');
-
     const [image, setImage] = useState(null);
     const [preview, setPreview] = useState(null)
     const [description, setDescription] = useState(null);
-    const [avatar, setAvatar] = useState(null)
+    const [avatar, setAvatar] = useState('')
 
     const [alertDislay, setAlertDisplay] = useState(false);
     const [alertMessage, setAlertMessage] = useState({})
@@ -24,6 +22,19 @@ export default function Account({history, location}) {
         setPreview(image ? URL.createObjectURL(image) : image)
 
     }, [image])
+
+    useEffect(()=>{
+
+        if(image){
+            const base64 = async () =>{
+                const data = await CompressImage(image, 0.6);
+                setAvatar(data.data)
+            }
+    
+            base64()
+        }
+        
+    },[image])
 
     if (!location.data) {
         return (<Redirect to="/cadastro" />)
@@ -56,16 +67,9 @@ export default function Account({history, location}) {
             return false;
         }
 
-        if(image){
-            const image64 = await CompressImage(image, 0.6);
-            if(image64){
-                setAvatar(image64.data)
-            }
 
-            handleCadastro('e')
-
-
-        }
+        // console.log(image64)
+        handleCadastro('e')
     }
 
         async function handleCadastro(e){
@@ -74,6 +78,7 @@ export default function Account({history, location}) {
             }
 
             try {
+
                 const response = await axios.post('http://localhost:3001/api/users', { username, avatar, description, email, password });
     
                 localStorage.setItem('token', `Bearer ${response.data.token}`);

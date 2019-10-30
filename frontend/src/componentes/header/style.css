@@ -68,7 +68,7 @@
     height: 60px;
     border-radius: 50%;
     background: #ddd;
-
+    background-size: cover;
     border: 2px solid #2e86de;
 }
 

@@ -49,15 +49,19 @@ module.exports = {
     },
 
     async show(req, res){
-        const user = await User.findOne({name: req.params.id});
-
-        return res.json(user);
+        
+        try {
+            const user = await User.findOne({_id: req.params.id});
+            return res.json(user);
+        } catch (error) {
+            return res.send(error)
+        }
+ 
     },
 
     async store(req, res){
         const { email } = req.body;
-        let avatarlink = 'https://i.imgur.com/W1vjvxL.jpg';
-
+        let avatarlink = null;
         if(await User.findOne({email})){
 
             return res.status(400).send({message: "usuario já existe"});
@@ -67,13 +71,14 @@ module.exports = {
         const {username, avatar, description, password} = req.body;
 
         if(avatar !== null){
-            const response= await imgur(avatar);
+            const response = await imgur(avatar);
 
             if(!response){
                 return res.status(400).send({message: "Erro ao salvar imagem de usuario"});
             }
 
             avatarlink = response.link;
+            console.log(avatarlink);
         }
 
         
