@@ -8,7 +8,6 @@ import Login from './pages/Login';
 import Perfil from './pages/Perfil';
 import Galeria from './pages/Galeria';
 import Account from './pages/Account';
-import Header from './componentes/header';
 
 import Erro404 from './pages/Erro404';
 
@@ -28,7 +27,6 @@ export default function Routes(){
     return(
         <BrowserRouter>
             <Switch>
-                <Route path="/header" exact component={Header}/>
                 <Route path="/" exact component={Login}/>
                 <Route path="/login" exact component={Login}/>
                 <Route path="/cadastro" exact component={Cadastro}/>
