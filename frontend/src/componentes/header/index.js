@@ -3,15 +3,12 @@ import axios from "axios";
 import Logout from '../Logout/';
 import "./style.css";
 
-const user_id = localStorage.getItem('user_id');
-// const avatar = localStorage.getItem('avatar');
-
 
 
 export default function Header() {
-
+    
+    const user_id = localStorage.getItem('user_id');
     const [user, setUser] = useState(false);
-    // const user = false;
 
     useEffect(() => {
         const fetchData = async () => {
