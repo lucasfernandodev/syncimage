@@ -38,6 +38,7 @@
     left: 50%;
     transform: translateX(-50%);
     background: #ddd;
+    background-size: cover;
 }
 
 .async-perfil .container-perfil .container-user .user-name{

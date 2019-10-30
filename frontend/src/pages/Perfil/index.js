@@ -1,11 +1,38 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React,{useState, useEffect} from 'react';
+import axios from 'axios';
+
 import Footer from '../../componentes/footer';
 import Header from '../../componentes/header';
 import './style.css';
 
 export default function Perfil() {
 
+    const user_id = localStorage.getItem('user_id');
+    const [isLoading, seIsLoading] = useState(false)
+    const [user, setUser] = useState(false);
+
+    useEffect(() => {
+
+        async function fetchUser(){
+
+            try {
+                const response = await axios.get(`http://localhost:3001/api/users/${user_id}`);
+
+                setUser(response.data)
+                seIsLoading(true)
+            } catch (error) {  
+                console.log({error})
+                seIsLoading(true)
+            }
+        }
+        fetchUser();
+
+    }, [])
+
+   if(!isLoading){
+    console.log(user)
+   }
+    
     return (
         <div className="async-perfil">
 
@@ -13,8 +40,8 @@ export default function Perfil() {
 
             <div className="container-perfil">
                 <div className="container-user">
-                    <div className="container-user-image"></div>
-                    <span className="user-name">Lucas Fernando</span>
+                    <div className="container-user-image" style={isLoading ? {backgroundImage: `url(${user.avatar})`} : null}></div>
+                    <span className="user-name">{isLoading ? user.username : null}</span>
                     <span className="logout">Logout</span>
                 </div>
 
@@ -25,11 +52,11 @@ export default function Perfil() {
 
                     <div className="fild">
                         <span className="title">Nome</span>
-                        <span className="text">Lucas Fernando</span>
+                        <span className="text">{isLoading ? user.username : null}</span>
                     </div>
                     <div className="fild">
                         <span className="title">E-mail</span>
-                        <span className="text">Exemplo@gmail.com</span>
+                        <span className="text">{isLoading ? user.email : null}</span>
                     </div>
                     <div className="fild">
                         <span className="title">Senha</span>
@@ -41,7 +68,7 @@ export default function Perfil() {
                 <div className="container-sobre">
                     <div className="fild">
                         <span className="title">Quem sou eu?</span>
-                        <span className="text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias voluptatem quis, pariatur labore soluta esse iste aliquid aliquam tempora assumenda rem necessitatibus impedit eum libero corrupti nam magni reiciendis repellendus.</span>
+                        <span className="text">{isLoading ? user.description : null}</span>
                     </div>
                     <div className="fild">
                         <div className="title">Categorias favoritas</div>
