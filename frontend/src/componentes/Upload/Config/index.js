@@ -7,11 +7,11 @@ import CompressImage from "../../../componentes/CompressImage";
 
 import loadingSvg from "../../../assets/loading.svg";
 
-const user_id = localStorage.getItem("user_id");
-const token = localStorage.getItem("token");
-
 
 export default function Config(props) {
+
+    const user_id = localStorage.getItem("user_id");
+    const token = localStorage.getItem("token");
 
     // Form
     const [title, setTitle] = useState('');
@@ -245,7 +245,7 @@ export default function Config(props) {
                     onClose={(e) => { setAlertDisplay(false) }}
                 />
 
-
+            
             </div>
 
         )

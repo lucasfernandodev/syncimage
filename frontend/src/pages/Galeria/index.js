@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import Header from "../../componentes/header";
 import Footer from "../../componentes/footer";
 import Upload from '../../componentes/Upload';
+import ImageView from '../../componentes/ImageView';
 import AddCategory from "./addCategory";
 import LoadingImages from "../../componentes/LoadingImages";
 import "./style.css";
@@ -17,19 +18,47 @@ export default function Galeria() {
     // Modais
     const [uploadDisplay, setUploadDisplay] = useState(false);
     const [categoryDisplay, setCategoryDisplay] = useState(false);
+    const [imageView, setImageView] = useState(false);
 
     // Array com categorias das imagens
     const [listCategory, setListCategory] = useState([]);
     const [categorySelect, setCategorySelect] = useState('all')
+
+    const [imageData, setImageData] = useState(null)
+
+
+    // useEffect(() => {
+
+    //     (async function () {
+    //         try {
+    //             // Busca as imagens
+    //             const response = await axios.get(`http://localhost:3001/api/image/${user_id}`, {headers: {
+    //                 authorization: token
+    //             }});
+
+    //             const {data} = response;
+    //             setImageData(data)
+
+
+    //         } catch (error) {
+    //             console.log({ error })
+    //         }
+
+    //     }());
+
+
+    // }, [user_id])
 
 
     useEffect(() => {
         (async function () {
 
             try {
-                const response = await axios.get(`http://localhost:3001/api/category/${user_id}`, {headers: {
-                    authorization: token
-                }});
+                const response = await axios.get(`http://localhost:3001/api/category/${user_id}`, {
+                    headers: {
+                        authorization: token
+                    }
+                });
 
                 if (response.data.category === null) {
                     setListCategory(['none']);
@@ -47,12 +76,18 @@ export default function Galeria() {
     }, [uploadDisplay])
 
 
+    console.log(imageData)
 
-  
+    function mostaImage(dados){
+        setImageData(dados)
+        setImageView(true)
+    }
+
 
     return (
         <>
             <Header />
+            <ImageView image={imageData !== null ? imageData : null} display={imageView} onClose={event => setImageView(false)}/>
             <div className="container-galeria">
                 <header className="header-galeria">
                     <div className="header-title">
@@ -82,9 +117,9 @@ export default function Galeria() {
 
                 </header>
 
-                <main className="main-galeria">    
-  
-                    <LoadingImages filter={categorySelect}/>
+                <main className="main-galeria">
+
+                    <LoadingImages filter={categorySelect} View={item => mostaImage(item)}/>
 
                 </main>
             </div>

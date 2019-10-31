@@ -1,0 +1,116 @@
+
+/* Modal View */
+
+.modal-view{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99999;
+}
+
+.modal-view .container-document{
+    max-height: 700px;
+    background: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 15px;
+}
+
+.modal-view .container-document .title{
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+
+    height: 50px;
+    line-height: 50px;
+    position: relative;
+}
+
+.modal-view .container-document .title button.close{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    outline: none;
+    font-family: monospace;
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.modal-view .container-document .title h1{
+    color: #444;
+    margin-bottom: 15px;
+    display: block;
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    font-size: 26px;
+    /* padding-left: 15px; */
+}
+
+.modal-view .container-document .content{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.modal-view .container-document .container-preview{
+    height: 500px;
+    width: 800px;
+    background: transparent;
+    border: 1px solid #ddd;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.modal-view .container-document .container-info{
+    height: 500px;;
+    width: 300px;
+    padding-left: 30px;
+
+}
+
+.modal-view .container-document .container-info > .info-title{
+    width: 100%;
+    padding-bottom: 15px;
+    text-align: center;
+  
+}
+
+.modal-view .container-document .container-info .info-title h3{
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+}
+
+.modal-view .container-document .container-info .fild{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 7px 0;
+}
+
+.modal-view .container-document .container-info .fild .info-title{
+    padding: 5px 0;
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+.modal-view .container-document .container-info .fild .info-data{
+    font-family: roboto, Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #666;
+    text-transform: capitalize;
+}
