@@ -15,7 +15,6 @@ export default function Header(props) {
         const fetchData = async () => {
             const result = await axios.get(`http://localhost:3001/api/users/${user_id}`);
             setUser(result.data);
-            console.log(result);
         };
 
         if (!props.link) {
@@ -46,7 +45,9 @@ export default function Header(props) {
                         <span>{user ? user.email: null}</span>
                         <a href="/#" className="btn-logout" onClick={Logout}>Deslogar</a>
                     </span>
-                    <div className="user-image" style={user ? { backgroundImage: `url(${user.avatar})` } : null}></div>
+                    <Link to="/perfil">
+                        <div className="user-image" style={user ? { backgroundImage: `url(${user.avatar})` } : null}></div>
+                    </Link>
 
                 </div>
 

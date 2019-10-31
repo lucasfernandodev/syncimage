@@ -1,5 +1,6 @@
 export default function Logout(){
 
+
     const token = localStorage.getItem('token');
     const user_id = localStorage.getItem('user_id');
 
@@ -9,4 +10,7 @@ export default function Logout(){
 
     localStorage.removeItem('token');
     localStorage.removeItem('user_id');
+    localStorage.removeItem('avatar');
+    localStorage.removeItem('login');
+
 }

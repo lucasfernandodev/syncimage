@@ -50,6 +50,7 @@
     font-family: roboto, sans-serif;
     font-weight: normal;
     color: #555;
+    text-transform: capitalize;
     display: block;
 }
 
@@ -65,10 +66,12 @@
     display: block;   
     cursor: pointer;
     transition: 0.8s linear;
+    text-decoration: none;
 }
 
 .async-perfil .container-perfil .container-user .logout:hover{
-    color: #2980b9;  
+    color: #2980b9; 
+    text-decoration: #2980b9 underline; 
 }
 
 .async-perfil .container-perfil .container-title{
@@ -139,7 +142,7 @@
     font-family: roboto, Arial, Helvetica, sans-serif;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    justify-content: center;
     padding-left: 30px;
     border-left: 1px solid #888;
 }

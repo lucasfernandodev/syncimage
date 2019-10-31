@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from 'react';
 import axios from 'axios';
 
+import Logout from '../../componentes/Logout'
 import Footer from '../../componentes/footer';
 import Header from '../../componentes/header';
 import './style.css';
@@ -42,7 +43,7 @@ export default function Perfil() {
                 <div className="container-user">
                     <div className="container-user-image" style={isLoading ? {backgroundImage: `url(${user.avatar})`} : null}></div>
                     <span className="user-name">{isLoading ? user.username : null}</span>
-                    <span className="logout">Logout</span>
+                    <a href="/#" className="logout" onClick={Logout}>Logout</a>
                 </div>
 
                 <div className="container-title"><h3>Informações do usuario</h3></div>

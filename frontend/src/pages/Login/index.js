@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 import Alert from "../../componentes/Alert";
 import ValidaForms from "../../componentes/ValidaForms";
 
@@ -68,14 +69,13 @@ export default function Login({ history }) {
 
             try {
                 const autheticate = await axios.post(`http://localhost:3001/api/authenticate`, { email, password });
-                // console.log()
                 
                 localStorage.setItem('token', `Bearer ${autheticate.data.token}`);
                 localStorage.setItem('user_id', autheticate.data.user._id);
                 localStorage.setItem('avatar', autheticate.data.avatar);
                 setLoading('Login');
-
-
+                
+                return history.push('/galeria')
 
             } catch (err) {
 
@@ -100,9 +100,7 @@ export default function Login({ history }) {
 
             }
 
-            if(localStorage.getItem('token')){
-                history.push('/galeria')
-            }
+            
             
         }
     }
