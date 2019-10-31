@@ -1,4 +1,5 @@
 export const isAuth = () => {
+   
     const token = localStorage.getItem('token');
     const user_id = localStorage.getItem('user_id');
 
@@ -8,5 +9,6 @@ export const isAuth = () => {
         }
     }
 
-    return false;
+    return false
+
 }

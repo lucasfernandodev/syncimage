@@ -9,10 +9,10 @@ import "./style.css";
 
 import camera from "../../assets/camera.svg";
 
-const user_id = localStorage.getItem('user_id');
-const token = localStorage.getItem('token');
-
 export default function Galeria() {
+
+    const user_id = localStorage.getItem('user_id');
+    const token = localStorage.getItem('token');
 
     // Modais
     const [uploadDisplay, setUploadDisplay] = useState(false);

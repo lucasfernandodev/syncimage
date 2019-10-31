@@ -2,9 +2,10 @@ import React, { useState, useEffect, useMemo } from 'react';
 import useInfiniteScroll from '../useInfiniteScroll';
 import axios from 'axios';
 
-const user_id = localStorage.getItem("user_id");
-const token = localStorage.getItem("token");
 export default function LoadingImages(props) {
+
+    const user_id = localStorage.getItem("user_id");
+    const token = localStorage.getItem("token");
 
     // images
     const [listItems, setListItems] = useState(null);
