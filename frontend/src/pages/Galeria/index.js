@@ -53,12 +53,11 @@ export default function Galeria() {
     }, [uploadDisplay])
 
 
-    console.log(imageData)
 
     function mostaImage(dados){
         setImageData(dados)
         setImageView(true)
-        console.log('loop?')
+       
     }
 
 
