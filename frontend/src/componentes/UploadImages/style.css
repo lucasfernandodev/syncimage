@@ -232,8 +232,6 @@
     color: #222;
     font-family: roboto, sans-serif;
     font-weight: bold;
-    margin: 3px 0;
-    margin-top: 25px;
 }
 
 .container-config .content .form-row .btn-primary{
@@ -245,7 +243,6 @@
     background: #efefef;
     border: none;
     width: 100px;
-    margin-left: 5px;
 }
 
 .container-config .content span{
@@ -303,4 +300,21 @@
 .container-config  .container-description .form-row input{
     display: block;
     margin-right: 7px;
+}
+
+.form-row button{
+    height: 48px;
+    max-height: 48px;
+    margin: 25px 5px;
+    margin-left: 0;
+    position: relative;
+    overflow: hidden;
+}
+img.loading{
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+    background: none;
+    display: block;
+
 }

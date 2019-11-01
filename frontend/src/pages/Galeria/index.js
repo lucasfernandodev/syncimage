@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from "../../componentes/header";
 import Footer from "../../componentes/footer";
-import Upload from '../../componentes/Upload';
+import Upload from '../../componentes/UploadImages';
 import ImageView from '../../componentes/ImageView';
 import AddCategory from "./addCategory";
 import LoadingImages from "../../componentes/LoadingImages";
@@ -11,9 +11,6 @@ import "./style.css";
 import camera from "../../assets/camera.svg";
 
 export default function Galeria() {
-
-    const user_id = localStorage.getItem('user_id');
-    const token = localStorage.getItem('token');
 
     // Modais
     const [uploadDisplay, setUploadDisplay] = useState(false);
@@ -29,6 +26,9 @@ export default function Galeria() {
 
     useEffect(() => {
         (async function () {
+
+            const user_id = localStorage.getItem('user_id');
+            const token = localStorage.getItem('token');
 
             try {
                 const response = await axios.get(`http://localhost:3001/api/category/${user_id}`, {
@@ -81,7 +81,7 @@ export default function Galeria() {
                             onChange={event => setCategorySelect(event.target.value)}>
                             <option value="all">All</option>
 
-                            {listCategory ? listCategory.map((item, i) => (
+                            {listCategory !== null ? listCategory.map((item, i) => (
                                 <option value={item} key={i}>{item}</option>
                             )) : ''}
                         </select>

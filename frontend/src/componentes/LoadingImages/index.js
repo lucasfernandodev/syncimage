@@ -4,8 +4,7 @@ import axios from 'axios';
 
 export default function LoadingImages(props) {
 
-    const user_id = localStorage.getItem("user_id");
-    const token = localStorage.getItem("token");
+    
 
     // images
     const [listItems, setListItems] = useState(null);
@@ -63,6 +62,9 @@ export default function LoadingImages(props) {
     useMemo(() => {
 
         (async function () {
+            const user_id = localStorage.getItem("user_id");
+            const token = localStorage.getItem("token");
+
             try {
                 // Busca as imagens
                 const response = await axios.get(`http://localhost:3001/api/image/${user_id}`, {headers: {
@@ -130,7 +132,7 @@ export default function LoadingImages(props) {
                         <img src={item.link} alt={item.title} className="card-img" onClick={event => (props.View(item))}/>
                     </li>
                 )) : ''}
-
+                {isFetching ? null : null}
             </ul>
         </>
     );

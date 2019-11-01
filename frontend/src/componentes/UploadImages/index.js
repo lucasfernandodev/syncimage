@@ -1,16 +1,18 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Config from "./Config";
 
 import './style.css';
 import camera from '../../assets/camera.svg';
 
 export default function Upload(props) {
+
     const [image, setImage] = useState(null);
     const [configMenu, setConfigMenu] = useState('');
 
-    useMemo(() => {
+    // const display = props.display;
+    useEffect(() => {
         setImage(null);
-    },[props.display])
+    }, [props.display])
 
     // Gera um preview da imagem
     const preview = useMemo(

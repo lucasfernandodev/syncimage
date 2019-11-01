@@ -1,7 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import axios from 'axios';
 
-import ValidaForms from "../../../componentes/ValidaForms";
+import Validator from "../../../validators";
+import {rules} from "../../../validators/rules/upload.js"
 import Alert from "../../../componentes/Alert";
 import CompressImage from "../../../componentes/CompressImage";
 
@@ -15,7 +16,7 @@ export default function Config(props) {
 
     // Form
     const [title, setTitle] = useState('');
-    const [categoria, setCategoria] = useState('all');
+    const [category, setCategory] = useState('all');
     const [privacy, setPrivacy] = useState('publico');
     const [description, setDescription] = useState('');
     const [descriptionNone, setDescriptionNone] = useState(false);
@@ -49,7 +50,7 @@ export default function Config(props) {
             // Tratar erro
             console.log({ error })
         }
-    }, [])
+    }, [user_id,token])
 
 
     useEffect(()=> {
@@ -67,41 +68,13 @@ export default function Config(props) {
 
 
 
-        const validaForm = await ValidaForms([
-            {
-                $campo: title, $nomeCampo: 'titulo', $rules: {
-                    min: 4,
-                    max: 16,
-                    type: String,
-                    required: true
-                }
-            },
-            {
-                $campo: categoria, $nomeCampo: 'categoria', $rules: {
-                    type: String,
-                    required: true
-                }
-            },
-            {
-                $campo: privacy, $nomeCampo: 'privacidade', $rules: {
-                    type: String,
-                    required: true
-                }
-            },
-            {
-                $campo: description, $nomeCampo: 'Descrição', $rules: {
-                    min: 8,
-                    max: 300,
-                    type: String,
-                    required: true
-                }
-            },
-            {
-                $campo: editionON, $nomeCampo: 'Edição automatica', $rules: {
-                    type: Boolean,
-                    required: false
-                }
-            },
+        const validaForm = await Validator([
+
+            { campo: title, campoName: 'titulo',  rules: rules.Title },
+            { campo: category, campoName: 'categoria',  rules: rules.Category },
+            { campo: privacy, campoName: 'privacidade',  rules: rules.Privacy },
+            { campo: description, campoName: 'Descrição',  rules: rules.Description },
+            { campo: editionON, campoName: 'Edição automatica',  rules: rules.EditionOn },
 
         ])
 
@@ -148,7 +121,7 @@ export default function Config(props) {
                     user_id,
                     title,
                     description,
-                    category: categoria,
+                    category,
                     privacy,
 
                 }
@@ -211,8 +184,8 @@ export default function Config(props) {
                     <label htmlFor="category" className="f-label">Escolher categoria</label>
                     <select
                         id="category"
-                        onChange={event => setCategoria(event.target.value)}
-                        value={categoria !== '' ? categoria : ''}
+                        onChange={event => setCategory(event.target.value)}
+                        value={category !== '' ? category : ''}
                     >
                         <option value="all">All</option>
                         {listCategory ? listCategory.map((item, i) => (

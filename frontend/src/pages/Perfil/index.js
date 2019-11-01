@@ -8,14 +8,14 @@ import './style.css';
 
 export default function Perfil() {
 
-    const user_id = localStorage.getItem('user_id');
+
     const [isLoading, seIsLoading] = useState(false)
     const [user, setUser] = useState(false);
 
     useEffect(() => {
 
         async function fetchUser(){
-
+            const user_id = localStorage.getItem('user_id');
             try {
                 const response = await axios.get(`http://localhost:3001/api/users/${user_id}`);
 
