@@ -115,7 +115,7 @@
     transition: 0.5s linear;
     border: none;
     border: 1px solid #ddd !important;
-    color: #333;
+    color: #222;
     font-size: 14px;
     padding-left: 12px;
 }
@@ -123,7 +123,8 @@
 
 .async-login .form-row{
     width: 100%;
-    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-bottom: 15px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -138,7 +139,7 @@
 
 .async-login .form-row label{
     padding-left: 25px;
-    color: #555;
+    color: #222;
     font-size: 14px;
     font-weight: bold;
     height: 100%;

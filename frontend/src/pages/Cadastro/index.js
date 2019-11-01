@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom'
+
+
+import Validator from "../../validators";
+import { rules } from "../../validators/rules/cadastro";
+
 import Alert from "../../componentes/Alert";
-import ValidaForms from "../../componentes/ValidaForms";
-
-
-import "./style.css";
 import loadingSvg from "../../assets/loading.svg";
 import woman from "../../assets/woman2.jpg";
-
+import "./style.css";
 
 export default function Cadastro() {
 
@@ -35,37 +36,11 @@ export default function Cadastro() {
 
 
 
-        const validaForm = await ValidaForms([
-            {
-                $campo: username, $nomeCampo: 'username', $rules: {
-                    min: 4,
-                    max: 12,
-                    type: String,
-                    required: true
-                }
-            },
-            {
-                $campo: email, $nomeCampo: 'email', $rules: {
-                    min: 4,
-                    max: 32,
-                    type: String,
-                    required: true
-                }
-            },
-            {
-                $campo: password, $nomeCampo: 'password', $rules: {
-                    min: 4,
-                    max: 12,
-                    type: String,
-                    required: true
-                }
-            },
-            {
-                $campo: termos, $nomeCampo: 'termos', $rules: {
-                    type: Boolean,
-                    required: true
-                }
-            },
+        const validaForm = await Validator([
+            { campo: username, campoName: 'username',  rules: rules.Username },
+            { campo: email, campoName: 'email',  rules: rules.Email },
+            { campo: password, campoName: 'password',  rules: rules.Password },
+            { campo: termos, campoName: 'termos',  rules: rules.Termos },
 
         ])
 
@@ -89,8 +64,8 @@ export default function Cadastro() {
     }
 
     return (
-
-        <div className="container-main">
+        <div className="async-cadastro">
+            <div className="container-main">
             {account ? (<Redirect to={{
                 pathname: "/account",
                 data: {username, password, email},
@@ -105,11 +80,13 @@ export default function Cadastro() {
                     <h1 className="title">
                         Que tal, criar uma nova conta!
                     </h1>
+
                     <span className="description">
                         Faça upload das suas imagens, com qualidade e tenha acesso aonde estiver pelo computador ou celular.
                     </span>
+
                     <div className="form-group">
-                        <label htmlFor="username" className="f-label">Nome de usuario <span>(Somente letras)</span></label>
+                        <label htmlFor="username" className="f-label">Nome de usuario</label>
                         <input
                             type="text"
                             id="username"
@@ -120,23 +97,23 @@ export default function Cadastro() {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="email" className="f-label">Seu e-mail</label>
+                        <label htmlFor="email" className="f-label">E-mail</label>
                         <input
                             type="email"
                             id="email"
                             className="f-input"
-                            placeholder="Email.oficial@exemplo.com"
+                            placeholder="Seu email"
                             onChange={event => setEmail(event.target.value)}
                         />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="password" className="f-label">Sua senha</label>
+                        <label htmlFor="password" className="f-label">Senha</label>
                         <input
                             type="password"
                             id="password"
                             className="f-input"
-                            placeholder="Digite uma senha segura"
+                            placeholder="Sua senha"
                             onChange={event => setPassword(event.target.value)}
                             maxLength="10"
                         />
@@ -157,6 +134,7 @@ export default function Cadastro() {
                 onClose={(e) => { setAlertDisplay(false) }}
             />
 
+        </div>
         </div>
     )
 }
