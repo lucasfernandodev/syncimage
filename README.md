@@ -1,4 +1,4 @@
-# SyncImage
+# Sync Image
 
 <img src="doc/login2.PNG" />
 
