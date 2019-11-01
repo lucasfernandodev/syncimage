@@ -27,29 +27,6 @@ export default function Galeria() {
     const [imageData, setImageData] = useState(null)
 
 
-    // useEffect(() => {
-
-    //     (async function () {
-    //         try {
-    //             // Busca as imagens
-    //             const response = await axios.get(`http://localhost:3001/api/image/${user_id}`, {headers: {
-    //                 authorization: token
-    //             }});
-
-    //             const {data} = response;
-    //             setImageData(data)
-
-
-    //         } catch (error) {
-    //             console.log({ error })
-    //         }
-
-    //     }());
-
-
-    // }, [user_id])
-
-
     useEffect(() => {
         (async function () {
 
@@ -81,6 +58,7 @@ export default function Galeria() {
     function mostaImage(dados){
         setImageData(dados)
         setImageView(true)
+        console.log('loop?')
     }
 
 

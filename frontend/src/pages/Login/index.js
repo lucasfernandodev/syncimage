@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
-import Alert from "../../componentes/Alert";
-import ValidaForms from "../../componentes/ValidaForms";
+
+import Validator from "../../validators/";
+import { rules } from "../../validators/rules/login"
 
 import "./style.css";
 import loadingSvg from "../../assets/loading.svg";
 import woman from "../../assets/woman.jpg";
-
+import Alert from "../../componentes/Alert";
 
 export default function Login({ history }) {
 
@@ -29,136 +29,105 @@ export default function Login({ history }) {
         e.preventDefault();
         setLoading('loading');
 
-        // Valdia o formulario
-        const validaForm = await ValidaForms([
-            {
-                $campo: email, $nomeCampo: 'email', $rules: {
-                    min: 4,
-                    max: 32,
-                    type: String,
-                    required: true
-                }
-            },
-            {
-                $campo: password, $nomeCampo: 'password', $rules: {
-                    min: 4,
-                    max: 12,
-                    type: String,
-                    required: true
-                }
-            },
-            {
-                $campo: loginON, $nomeCampo: 'Lembrar-me', $rules: {
-                    type: Boolean,
-                    required: false
-                }
-            },
+        
+        const validaLogin = await Validator([
+
+            { campo: email, campoName: 'email', rules: rules.Email, },
+            { campo: password, campoName: 'password', rules: rules.Password },
+            { campo: loginON, campoName: 'Lembrar-me', rules: rules.isLogin },
 
         ])
 
-        if (validaForm !== false) {
-
-            setAlertContent({
-                title: "Falha ao logar",
-                message: validaForm[0],
-                type: 'fail'
-            })
-            setAlertDisplay(true);
-            setLoading('login');
-        } else {
+        if (!validaLogin) {
 
             try {
                 const autheticate = await axios.post(`http://localhost:3001/api/authenticate`, { email, password });
-                
+
                 localStorage.setItem('token', `Bearer ${autheticate.data.token}`);
                 localStorage.setItem('user_id', autheticate.data.user._id);
                 localStorage.setItem('avatar', autheticate.data.avatar);
                 setLoading('Login');
-                
+
                 return history.push('/galeria')
 
             } catch (err) {
 
-                const erro = { error: err };
-
-                if (erro.error.response) {
-
-                    const message = erro.error.response.data.message
-
-                    setAlertContent({
-                        title: "Falha ao logar",
-                        message: message,
-                        type: 'fail'
-                    });
-                    setAlertDisplay(true);
-
-                    setLoading('Login');
-                } else {
-                    console.log(erro);
-                }
-
-
+                setAlertContent({ title: "Falha ao logar", message: "Falha ao tentar logar!", type: 'fail' })
+                setAlertDisplay(true);
+                setLoading('login');
             }
 
-            
-            
+        } else {
+
+
+            setAlertContent({ title: "Falha ao logar!", message: validaLogin[0], type: 'fail' })
+            setAlertDisplay(true);
+            setLoading('login');
         }
+
+
     }
 
 
     return (
-        <div className="container-main">
-            <form className="form-login" onSubmit={handlerLogin}>
-                <div className="container-woman">
-                    <img src={woman} alt="Mulher de azul" />
-                </div>
-                <div className="content">
-                    <h1 className="title">
-                        Ola,
-                   <span>Bem vindo!</span>
-                    </h1>
-                    <span className="description">
-                        Faça upload das suas imagens, com qualidade e tenha acesso aonde estiver pelo computador ou celular.
-                </span>
-                    <div className="form-group">
-                        <label htmlFor="email" className="f-label">Seu email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            className="f-input"
-                            placeholder="E-mail"
-                            onChange={event => setEmail(event.target.value)}
-                            maxLength="30"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password" className="f-label">Sua senha</label>
-                        <input
-                            type="password"
-                            id="password"
-                            className="f-input"
-                            placeholder="Digite uma senha segura"
-                            onChange={event => setPassword(event.target.value)}
-                            maxLength="10"
-                        />
-                    </div>
-                    <div className="form-row">
-                        <input type="checkbox" id="lebrar-me" 
-                        onChange={event => setLoginOn(event.target.checked)} />
-                        <label htmlFor="lebrar-me">Manter conectado</label>
+        <div className="async-login">
+            <div className="container-main">
+                <form className="form-login" onSubmit={handlerLogin}>
+
+                    {/* Ilustração */}
+                    <div className="container-woman">
+                        <img src={woman} alt="Mulher de azul" />
                     </div>
 
-                    <button className="btn-login">{loading === 'loading' ? (<img src={loadingSvg} className="loading" alt="Loading" />) : loading}</button>
+                    <div className="content">
+                        <h1 className="title">
+                            Ola, <span>Bem vindo!</span>
+                        </h1>
+
+                        <span className="description">
+                            Faça upload das suas imagens, com qualidade e tenha acesso aonde estiver pelo computador ou celular.
+                    </span>
 
 
-                    <span className="no-count">Não tem uma conta? <a href="/cadastro">Crie uma agora</a></span>
-                    <Alert
+                        {/* Filds */}
+                        <div className="form-group">
+                            <label htmlFor="email" className="f-label">E-mail</label>
+                            <input
+                                type="email"
+                                id="email"
+                                className="f-input"
+                                placeholder="Seu email"
+                                onChange={event => setEmail(event.target.value)}
+                                maxLength="30"
+                            />
+                        </div>
 
-                        display={alertDisplay}
-                        content={alertContent}
-                        onClose={(e) => { setAlertDisplay(false) }} />
-                </div>
-            </form>
+                        <div className="form-group">
+                            <label htmlFor="password" className="f-label">Senha</label>
+                            <input
+                                type="password"
+                                id="password"
+                                className="f-input"
+                                placeholder="Sua senha"
+                                onChange={event => setPassword(event.target.value)}
+                                maxLength="10"
+                            />
+                        </div>
+
+                        <div className="form-row">
+                            <input type="checkbox" id="lebrar-me" onChange={event => setLoginOn(event.target.checked)} />
+                            <label htmlFor="lebrar-me">Manter conectado</label>
+                        </div>
+
+                        <button className="btn-login">{loading === 'loading' ? (<img src={loadingSvg} className="loading" alt="Loading" />) : loading}</button>
+
+
+                        <span className="no-count">Não tem uma conta? <a href="/cadastro">Crie uma agora</a></span>
+
+                        <Alert display={alertDisplay} content={alertContent} onClose={(e) => { setAlertDisplay(false) }} />
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

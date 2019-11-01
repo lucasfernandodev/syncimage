@@ -16,7 +16,6 @@ function formatBytes(bytes, decimals = 2) {
 }
 
 export default function ImageView(props) {
-    console.log(props)
     let image;
     let sizekb;
     if (props.image !== null) {

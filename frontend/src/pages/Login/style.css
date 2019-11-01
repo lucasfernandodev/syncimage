@@ -1,6 +1,21 @@
 @import url('https://fonts.googleapis.com/css?family=Aclonica&display=swap');
 
-.container-main{
+.async-login{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;  
+    color: #2c3e50;
+    font-family: roboto, Arial, Helvetica, sans-serif;
+}
+
+.async-login button, .async-login input{
+    font-family: roboto, Arial, Helvetica, sans-serif;
+}
+
+.async-login .container-main{
     width: 100%;
     height: 100vh;
     display: flex;
@@ -9,7 +24,7 @@
     align-items: center;
 }
 
-.container-main form{
+.async-login .container-main .form-login{
     height: auto;
     max-height: 600px;
     background: #fff;
@@ -19,7 +34,7 @@
     box-shadow: 1px 1px 22px rgba(0, 0, 0, 0.12);
 }
 
-.container-main form .container-woman{
+.async-login .container-main .form-login .container-woman{
     background: #fff;
     width: 650px;
     height: 600px;
@@ -29,18 +44,18 @@
     justify-content: flex-end;
 }
 
-.container-main form .container-woman img{
+.async-login .container-main .form-login .container-woman img{
     width: auto;
     height: 100%;
 }
 
-.container-main form .content{
+.async-login .container-main .form-login .content{
     width: 400px;
     background: #fff;
     padding: 30px;
 }
 
-.container-main form .content .title{
+.async-login .container-main .form-login .content .title{
     width: 100%;
     font-size: 32px;
     margin-bottom: 30px;
@@ -49,90 +64,81 @@
     font-family: 'Aclonica', sans-serif;
     color: #2c3e50;
     display: block;
- 
+
+
 }
 
-.container-main form .content .title span{
+.async-login .container-main .form-login .content .title span{
     display: block;
     width: 100%;
 
 }
 
-.container-main form .content .description{
-    color: #2c3e50;
+.async-login .container-main .form-login .content .description{
+ 
     font-size: 14px;
     font-weight: 400;
-    font-family: roboto, Arial, Helvetica, sans-serif;
+
     line-height: 26px;
     margin-bottom: 30px;
-
     display: block;
+    
 }
 
-.container-main form .form-group{
+.async-login .container-main .form-login .form-group{
     display: flex;
     flex-direction: column;
     margin: 15px 0;
-  
 }
 
-.container-main form .form-group label{
+.async-login .container-main .form-login .form-group label{
     width: 100%;
     display: block;
     margin-bottom: 8px;
     font-size: 14px;
     font-weight: bold;
-    font-family: "roboto", Arial, Helvetica, sans-serif;
-    color: #2c3e50;
+    color: #222;
     opacity: 0.7;
 }
 
-.container-main form .form-group label span{
+.async-login .container-main .form-login .form-group label span{
     font-size: 12px;
-    color: #2c3e50;
+    color: #222;
     font-weight: normal;
     margin-left: 3px;
 }
 
-.container-main form .form-group input{
+.async-login .container-main .form-login .form-group input{
     width: 100%;
     height: 45px;
     outline: none;
     transition: 0.5s linear;
     border: none;
-    border-bottom: 1px solid #ddd;
-    padding-lefT: 5px;
+    border: 1px solid #ddd !important;
     color: #333;
     font-size: 14px;
-    font-family: roboto, Arial, Helvetica, sans-serif;
+    padding-left: 12px;
 }
 
-.container-main form .form-group input::placeholder{
-    color: rgba(83, 82, 237, 0.5);
-}
 
-.container-main form .form-group input:focus, .container-main form .form-group input:hover{
-    box-shadow: 0px 1px 2px -8px rgba(83, 82, 237, 0.2), 0px 2px 2px -2px rgba(83, 82, 237, 0.8);
-}
-
-.form-row{
+.async-login .form-row{
     width: 100%;
-    margin: 30px 0;
-    font-family: roboto, Arial, Helvetica, sans-serif;
+    margin-bottom: 30px;
     display: flex;
     flex-direction: row;
-    align-items: flex-end;
+    align-items: center;
     position: relative;
+    max-height: 30px;
 }
 
-.form-row input{
+.async-login .form-row input{
     display: none;
 
 }
 
-.form-row label{
+.async-login .form-row label{
     padding-left: 25px;
-    color: #2c3e50;
+    color: #555;
     font-size: 14px;
     font-weight: bold;
     height: 100%;
@@ -147,9 +153,11 @@
     -ms-user-select: none;        /* IE10+ */
     user-select: none;            /* Possível implementação no futuro */
     cursor: pointer;
+
+    min-height: 100%;
 }
 
-.form-row label::before{
+.async-login .form-row label::before{
     content: "";
     position: absolute;
     left: 0;
@@ -162,48 +170,46 @@
     cursor: pointer;
 }
 
-.form-row input:checked + label::before{
+.async-login .form-row input:checked + label::before{
     background: #2c3e50;
 }
 
 
-.container-main form .btn-login{
+.async-login .container-main .form-login .btn-login{
     width: 100%;
     margin: 7px auto;
     height: 48px;
     cursor: pointer;
-    background: #3742fa;
+    background: #4b7bec;
     color: #fff;
     border: none;
     font-size: 16px;
-    font-family: roboto, Arial, Helvetica, sans-serif;
     text-transform: capitalize;
     outline: none;
     transition: 0.8s;
 }
 
+.async-login .container-main .form-login .btn-login:hover{
+    background: #3867d6;
+}
 
-.container-main form .content .no-count{
-    font-family: roboto, Arial, Helvetica, sans-serif;
+
+.async-login .container-main .form-login .content .no-count{
     width: 100%;
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
     align-items: center;
-    color: #2e86de;
 }
 
-.container-main form .content .no-count a{
+.async-login .container-main .form-login .content .no-count a{
     margin-left: 7px;
     text-decoration: none;
     font-weight: bold;
-    color: #2e86de;
+    color: #4b7bec;
 }
 
-.loading{
-    width: 72px;
-    height: 72px;
-    margin: 0 auto;
-    display: none;
+.async-login .container-main .form-login .content .no-count a:hover{
+    text-decoration: underline #4b7bec;
 }
