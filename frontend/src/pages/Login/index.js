@@ -25,6 +25,7 @@ export default function Login({ history }) {
     const [loading, setLoading] = useState('Login')
 
 
+
     async function handlerLogin(e) {
         e.preventDefault();
         setLoading('loading');
@@ -68,7 +69,9 @@ export default function Login({ history }) {
 
     }
 
-
+    if(localStorage.getItem('token')){
+        history.push('/galeria');
+    }
     return (
         <div className="async-login">
             <div className="container-main">

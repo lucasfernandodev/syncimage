@@ -115,7 +115,7 @@ export default function Account({history, location}) {
     }
 
     return (
-        <div className="async-account" style={{ backgroundImage: `url(${userImage})` }}>
+        <div className="async-account" style={preview ? { backgroundImage: `url(${preview})` }  : { backgroundImage: `url(${userImage})` }}>
             <div className="container">
                 <div className="container-image">
                     <div className="title"><h3>Escolha uma imagem para o seu perfil</h3></div>

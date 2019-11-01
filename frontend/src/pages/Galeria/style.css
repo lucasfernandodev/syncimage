@@ -50,6 +50,13 @@ body{
     background: #fff;
 }
 
+.container-galeria .header-galeria .header-category .btn-category:hover{
+    opacity: 1;
+  
+}
+
+
+
 .container-galeria .header-galeria .header-add-category .btn-add-category{
     width: 44px;
     height: 44px;
@@ -65,6 +72,11 @@ body{
     opacity: 0.5;
     transition: .5s linear;
 }
+
+.container-galeria .header-galeria .header-add-category .btn-add-category:hover{
+    opacity: 1;
+}
+
 
 .container-galeria .header-galeria .header-category .btn-category{
     width: 220px;

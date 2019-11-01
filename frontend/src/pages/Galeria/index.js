@@ -64,7 +64,9 @@ export default function Galeria() {
     return (
         <>
             <Header />
+
             <ImageView image={imageData !== null ? imageData : null} display={imageView} onClose={event => setImageView(false)}/>
+            
             <div className="container-galeria">
                 <header className="header-galeria">
                     <div className="header-title">
@@ -102,7 +104,9 @@ export default function Galeria() {
             </div>
 
             <AddCategory display={categoryDisplay} onClose={event => setCategoryDisplay(false)} />
+            
             <Upload display={uploadDisplay} onClose={event => setUploadDisplay(false)} />
+
             <Footer />
         </>
     )
