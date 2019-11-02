@@ -34,6 +34,10 @@ const ImageSchema = new mongoose.Schema({
         type: String,
         
     },
+    link_preview: {
+        type: String,
+        
+    },
     type: {
         type: String,
         

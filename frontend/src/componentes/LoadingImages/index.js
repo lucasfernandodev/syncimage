@@ -129,7 +129,7 @@ export default function LoadingImages(props) {
                 {listItems ? listItems.map(item => (
 
                     <li className="card-image" key={item._id}>
-                        <img src={item.link} alt={item.title} className="card-img" onClick={event => (props.View(item))}/>
+                        <img src={item.link_preview} alt={item.title} className="card-img" onClick={event => (props.View(item))}/>
                     </li>
                 )) : ''}
                 {isFetching ? null : null}

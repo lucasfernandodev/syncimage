@@ -126,14 +126,20 @@ export default function Config(props) {
 
                 }
 
+                // Gera um base64 da image
                 const result = await CompressImage(image, 1);
-
                 const baseString = result.data;
 
+                // Gera um base64 da preview
+                const resultPreview = await CompressImage(image, 0.5);
+                const preview64 = resultPreview.data;
+
                 try {
-                    await axios.post('http://localhost:3001/api/image', { image: baseString, info }, {headers: {
+                    await axios.post('http://localhost:3001/api/image', { image: baseString, info, preview: preview64 }, {headers: {
                         authorization: token
                     }})
+
+                    
 
                     setAlertContent({
                         title: "Sucesso ao fazer upload",

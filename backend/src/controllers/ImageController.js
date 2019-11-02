@@ -16,6 +16,7 @@ module.exports = {
 
         const info = req.body.info
         const base64 = req.body.image;
+        const preview64 = req.body.preview;
       
 
         if(!info.title || info.title === null || typeof(info.title) === undefined || info.title === ''){
@@ -34,14 +35,27 @@ module.exports = {
             return res.status(400).json({message : 'Erro: campos invalidos'});
         }
 
-        
+
+
+        // Faz upload da imagem no imgur
         try {
             response = await axios.post(base_URL, {'image': base64}, headers);
         } catch (error) {
             return res.status(400).send(`Falha ao fazer o upload da imagem no imgur. ${error}`);
         }
 
+
+        // faz upload da preview no imgur
+        try {
+            responsePreview = await axios.post(base_URL, {'image': preview64}, headers);
+        } catch (error) {
+            return res.status(400).send(`Falha ao fazer o upload do preview no imgur. ${error}`);
+        }
+
+
+
         const resData = response.data.data
+        const responsePreviewImgur = responsePreview.data.data
         console.log(response);
 
         const itemData = {
@@ -51,6 +65,7 @@ module.exports = {
             'privacy': info.privacy,
             'category': info.category,
             'link': resData.link,
+            'link_preview' : responsePreviewImgur.link,
             'type': resData.type,
             'deleteHash' : resData.deletehash,
             'size': resData.size

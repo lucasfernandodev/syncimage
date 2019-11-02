@@ -4,10 +4,9 @@ const authMeddleware = require("./config/auth");
 const UserController = require("./controllers/UserController");
 const ImageController = require("./controllers/ImageController");
 const CategoryController = require("./controllers/CategoryController");
-const TokenController = require("./controllers/TokenController");
+// const TokenController = require("./controllers/TokenController");
 const routes = express.Router();
 
-routes.get('/isToken', TokenController.isToken);
 
 // users
 routes.get('/users', UserController.index);
